@@ -13,6 +13,7 @@ import com.skysoul.accountremebercompose.data.dbroom.entities.DMAccount
 import com.skysoul.accountremebercompose.data.dbroom.entities.DMCate
 import com.skysoul.accountremebercompose.data.dbroom.entities.DMExtraColumn
 import com.skysoul.accountremebercompose.data.dbroom.entities.DMUser
+import com.skysoul.appassistant.ContextProvider
 
 @Database(version = 1,exportSchema = false,
         entities = arrayOf(DMAccount::class, DMCate::class, DMUser::class, DMExtraColumn::class))
@@ -29,7 +30,7 @@ abstract class AccountDatabase:RoomDatabase() {
             if(INSTANCE ==null){
                 synchronized(lock){
                     if(INSTANCE ==null){
-                        INSTANCE = Room.databaseBuilder(MApplication.getInstance().getContext().applicationContext,
+                        INSTANCE = Room.databaseBuilder(ContextProvider.context.applicationContext,
                                 AccountDatabase::class.java,"account2.db").build()
                     }
                 }

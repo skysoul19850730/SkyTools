@@ -16,7 +16,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.core.view.WindowCompat
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
-import com.google.accompanist.systemuicontroller.rememberSystemUiController
+//import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.skysoul.accountremebercompose.ui.theme.AppTheme
 import com.skysoul.accountremebercompose.utils.ifValue
 import java.lang.reflect.ParameterizedType
@@ -35,8 +35,8 @@ open abstract class BaseActivity<VM : BaseViewModel> : FragmentActivity() {
         initViewModel()
         doStartObserver()
         setContent {
-            val sys = rememberSystemUiController()
-            sys.setSystemBarsColor(Color.Transparent, darkIcons = !isSystemInDarkTheme())
+//            val sys = rememberSystemUiController()
+//            sys.setSystemBarsColor(Color.Transparent, darkIcons = !isSystemInDarkTheme())
             AppTheme {
                 Box {
                     getPage()

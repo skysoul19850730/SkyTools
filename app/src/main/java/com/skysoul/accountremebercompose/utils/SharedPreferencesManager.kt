@@ -3,6 +3,7 @@ package com.skysoul.accountremebercompose.utils
 import android.content.Context
 import android.content.SharedPreferences
 import com.skysoul.accountremebercompose.MApplication
+import com.skysoul.appassistant.ContextProvider
 
 class SharedPreferencesManager  {
 
@@ -18,7 +19,7 @@ class SharedPreferencesManager  {
         fun getInstance(): SharedPreferencesManager {
             if (spm == null) {
                 spm = SharedPreferencesManager()
-                spm!!.sp = MApplication.getInstance().getSharedPreferences(SHP_NAME,Context.MODE_PRIVATE)
+                spm!!.sp = ContextProvider.context.getSharedPreferences(SHP_NAME,Context.MODE_PRIVATE)
             }
             return spm!!
         }

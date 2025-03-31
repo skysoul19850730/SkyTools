@@ -1,10 +1,10 @@
 [versions]
-kotlin = "1.12.0"
-appCompat = "1.6.1"
-lifecycle = "2.7.0"
+kotlin = "1.15.0"
+appCompat = "1.7.0"
+lifecycle = "2.8.7"
 room = "2.6.1"
 gson = "2.10.1"
-accompanist = "0.24.6-alpha"
+accompanist = "0.36.0"
 
 [plugins]
 
@@ -26,15 +26,16 @@ roomkapt = { module = "androidx.room:room-compiler", version.ref = "room" }
 
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 
-compose-constraintlayout = {module="androidx.constraintlayout:constraintlayout-compose",version="1.1.0"}
+compose-constraintlayout = {module="androidx.constraintlayout:constraintlayout-compose",version="1.1.1"}
 compose-activity ={module = "androidx.activity:activity-compose"}
 compose-livedata ={module = "androidx.compose.runtime:runtime-livedata"}
-compose-navigation={module="androidx.navigation:navigation-compose",version="2.8.7"}
-compose-icons = {module="androidx.compose.material:material-icons-extended",version = "1.7.8"}
-compose-material3={module="androidx.compose.material3:material3",version="1.3.1"}
+compose-navigation={module="androidx.navigation:navigation-compose",version="2.9.0-alpha09"}
+compose-icons = {module="androidx.compose.material:material-icons-extended"}
+compose-material3={module="androidx.compose.material3:material3"}
 
 [bundles]
 lifecycle = ["lifecycleruntime", "lifecycleviewmodel", "lifecycleviewmodel-compose"]
 room = ["roomktx", "roomruntime"]
 accompanist = ["accompanist-flowlayout","accompanist-pager","accompanist-systemuicontroller"]
+
 compose = ["compose-activity","compose-livedata","compose-constraintlayout","compose-navigation","compose-icons","compose-material3"]

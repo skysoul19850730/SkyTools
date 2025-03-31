@@ -3,24 +3,25 @@ package com.skysoul.accountremebercompose.utils
 import android.database.Cursor
 import android.util.Log
 import com.skysoul.accountremebercompose.MApplication
+import com.skysoul.appassistant.ContextProvider
+import com.skysoul.utils.log.LogUtil
+import com.skysoul.utils.log.NoLogTrace
 
-fun Any.log(text:String?){
+
+@NoLogTrace
+fun log(text:String?){
     text?:return
-    var tag = javaClass.simpleName
-    Log.d(tag,text)
+    LogUtil.d(text)
 }
-fun Any.log(id:Int){
-    var tag = javaClass.simpleName
-    Log.d(tag, MApplication.getInstance().getContext().getString(id))
+fun log(id:Int){
+    LogUtil.d(ContextProvider.context.getString(id))
 }
-fun Any.logE(text:String?){
+fun logE(text:String?){
     text?:return
-    var tag = javaClass.simpleName
-    Log.e(tag,text)
+    LogUtil.e(text)
 }
-fun Any.logE(id:Int){
-    var tag = javaClass.simpleName
-    Log.e(tag,MApplication.getInstance().getContext().getString(id))
+fun logE(id:Int){
+    LogUtil.e(ContextProvider.context.getString(id))
 }
 
 fun String?.ifValue(value:(v:String)->Unit):String?{

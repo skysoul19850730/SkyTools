@@ -21,8 +21,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.skysoul.accountremebercompose.log
 import com.skysoul.accountremebercompose.ui.VSpace16
+import com.skysoul.accountremebercompose.utils.log
 
 /**
  *@author shenqichao

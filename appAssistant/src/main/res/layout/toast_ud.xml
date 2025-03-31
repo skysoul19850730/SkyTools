@@ -1,0 +1,31 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/toastbg1"
+    android:orientation="vertical"
+    android:gravity="center_horizontal"
+    android:paddingHorizontal="16dp"
+    android:paddingVertical="13dp">
+
+    <ImageView
+        android:id="@+id/img_toast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1.5dp"
+        tools:src="@drawable/ic_test_ok"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/tv_toast"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:gravity="center_horizontal"
+        android:lineSpacingExtra="2dp"
+        android:maxWidth="183dp"
+        android:textColor="#ffffff"
+        android:textSize="12sp"
+        tools:text="请阅读并同意用户协议和个人信息保护政策" />
+
+</LinearLayout>

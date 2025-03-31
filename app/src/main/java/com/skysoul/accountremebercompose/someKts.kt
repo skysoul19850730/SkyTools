@@ -35,7 +35,3 @@ fun ImageBitmap.Companion.fromAssets(name:String):ImageBitmap?{
         null
     }
 }
-
-fun log(msg:String){
-    Log.d("sqc",msg)
-}
