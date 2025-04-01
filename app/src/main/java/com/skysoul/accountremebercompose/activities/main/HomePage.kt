@@ -283,7 +283,6 @@ fun HomePage(
                     }
 
                 }
-                ToastUtil.toast("lsjdlfjsljdflsflj")
 //                AnimatedVisibility(visible = showFbt) {
 //                    FloatingActionButton(onClick = {
 //                        clickListener.invoke(ClickView.Opt_ADD, null)

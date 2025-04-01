@@ -25,11 +25,6 @@ import com.skysoul.appassistant.R
  */
 object ToastUtil {
 
-    @Composable
-    fun toast(text: String?){
-        Text("testestt")
-    }
-
     fun showToast(text: String?, duration:Int = Toast.LENGTH_SHORT,gravity: Int = Gravity.BOTTOM){
         doShowToast(text,duration,gravity)
     }

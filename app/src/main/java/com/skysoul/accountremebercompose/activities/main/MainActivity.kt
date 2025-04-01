@@ -1,8 +1,9 @@
 package com.skysoul.accountremebercompose.activities.main
 
 import android.content.Intent
-import android.widget.TextView
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material3.DrawerState
@@ -11,8 +12,12 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.platform.ComposeView
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import com.skysoul.accountremebercompose.activities.edit.EditActivity
 import com.skysoul.accountremebercompose.activities.login.LoginActivity
 import com.skysoul.accountremebercompose.activities.main.ClickView.SEARCH
@@ -34,50 +39,40 @@ class MainActivity : BaseActivity<MainViewModel>() {
     override fun getPage() {
         scostate = rememberDrawerState(DrawerValue.Closed)
         scope = rememberCoroutineScope()
-        return HomePage(scostate,viewModel) { type, obj ->
-            when (type) {
-                ClickView.Opt_ADD -> {
-                    gotoEditor(null)
-                }
-                ClickView.Account -> {
-                    val account: SimpleAccount = obj as SimpleAccount
-                    viewModel.getDetailAccount(account.id) {
-                        gotoEditor(it)
+        return Box(Modifier.fillMaxSize()) {
+            var showSearch by remember { mutableStateOf(false) }
+            HomePage(scostate, viewModel) { type, obj ->
+                when (type) {
+                    ClickView.Opt_ADD -> {
+                        gotoEditor(null)
                     }
 
-                }
-                SEARCH ->{
-//                    ToastUtil.showIconToastLr("搜索功能开发中", android.R.drawable.ic_menu_search)
-                    ToastUtil.showComposeToast {
-                        Row {
-                            HSpace16()
-                            Icon( Icons.Filled.Favorite,null)
-                            HSpace16()
-                            Text("搜索功能开发中")
-                            HSpace16()
+                    ClickView.Account -> {
+                        val account: SimpleAccount = obj as SimpleAccount
+                        viewModel.getDetailAccount(account.id) {
+                            gotoEditor(it)
                         }
-                    }
-                    
-//                    ToastUtil.showViewToast(ComposeView(this).apply {
-//                        setContent {
-//                            Row {
-//                                HSpace16()
-//                                Icon( Icons.Filled.Favorite,null)
-//                                HSpace16()
-//                                Text("搜索功能开发中")
-//                                HSpace16()
-//                            }
-//                        }
-//                    })
-                }
-                else ->{
 
+                    }
+
+                    SEARCH -> {
+                        showSearch = true
+                    }
+
+                    else -> {
+
+                    }
                 }
             }
+            if(showSearch){
+                SearchPage(viewModel) { }
+            }
+
+
         }
     }
 
-    private fun gotoSearch(){
+    private fun gotoSearch() {
     }
 
     override fun initData() {
