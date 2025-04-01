@@ -19,6 +19,7 @@ import androidx.lifecycle.ViewModelProvider
 //import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.skysoul.accountremebercompose.ui.theme.AppTheme
 import com.skysoul.accountremebercompose.utils.ifValue
+import com.skysoul.utils.ToastUtil
 import java.lang.reflect.ParameterizedType
 
 /**
@@ -61,7 +62,7 @@ open abstract class BaseActivity<VM : BaseViewModel> : FragmentActivity() {
         }
         viewModel.toast.observe(this) {
             it.ifValue { s ->
-                Toast.makeText(this, s, Toast.LENGTH_SHORT).show()
+                ToastUtil.showToast(s)
             }
         }
         startObserver()
