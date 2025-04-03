@@ -14,6 +14,7 @@ import com.skysoul.accountremebercompose.model.repository.local.AccountResLocal
 import com.skysoul.accountremebercompose.model.repository.local.CateResLocal
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.map
 
 /**
@@ -27,17 +28,17 @@ class MainViewModel : BaseViewModel() {
 
     var user = UserManager.userLiveData
 
-    val accountResLocal: AccountResLocal = AccountResLocal()
+  private  val accountResLocal: AccountResLocal = AccountResLocal()
 
-    var mapCateAccountFlows = mapOf<Int,Flow<List<SimpleAccount>>>()
+//    var mapCateAccountFlows = mapOf<Int,Flow<List<SimpleAccount>>>()
 
 //    var _mAccounts: Flow<List<SimpleAccount>> =
 //        accountResLocal.getAccountAll(UserManager.getUserId(),mCateSelected.value)
 
-    var showTipAccount :MutableStateFlow<SimpleAccount?> =  MutableStateFlow(null)
+//    var showTipAccount :MutableStateFlow<SimpleAccount?> =  MutableStateFlow(null)
 
-    val showTip =  showTipAccount.map { it!=null }
-    val cateRepository: CateResLocal = CateResLocal()
+//    val showTip =  showTipAccount.map { it!=null }
+    private val cateRepository: CateResLocal = CateResLocal()
     var cateList = mutableStateListOf<Cate>()
     var cateSelected: Cate? by mutableStateOf(null)
 
@@ -46,6 +47,9 @@ class MainViewModel : BaseViewModel() {
     }
 
     fun searchAccounts(key:String):Flow<List<SimpleAccount>>{
+        if(key.isEmpty()){
+            return emptyFlow()
+        }
         return accountResLocal.searchAccounts(UserManager.getUserId(),key)
     }
 

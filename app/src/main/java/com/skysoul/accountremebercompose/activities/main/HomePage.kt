@@ -1,13 +1,9 @@
 package com.skysoul.accountremebercompose.activities.main
 
-import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.AnimatedVisibilityScope
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.core.MutableTransitionState
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.Image
@@ -25,8 +21,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyListScope
-import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
@@ -35,9 +29,6 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.Checkbox
-import androidx.compose.material3.CheckboxDefaults
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.FloatingActionButton
@@ -62,20 +53,18 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.skysoul.accountremebercompose.R
+import com.skysoul.accountremebercompose.activities.main.AccountItemClick.CHECKED_CHANGE
 import com.skysoul.accountremebercompose.activities.main.ClickView.SEARCH
 import com.skysoul.accountremebercompose.ui.HSpace16
 import com.skysoul.accountremebercompose.ui.VSpace
 import com.skysoul.accountremebercompose.ui.bar.Action
 import com.skysoul.accountremebercompose.ui.bar.topBar
 import com.skysoul.accountremebercompose.ui.dialog.TextDialog
-import com.skysoul.accountremebercompose.utils.gestureClick
-import com.skysoul.accountremebercompose.utils.log
 import kotlinx.coroutines.launch
 
 /**
@@ -102,7 +91,7 @@ fun HomePage(
     drawerState: DrawerState = rememberDrawerState(DrawerValue.Closed),
     mViewModel: MainViewModel,
     sharedTransitionScope: SharedTransitionScope,
-    inSearch:Boolean,
+    inSearch: Boolean,
     clickListener: (ClickView, any: Any?) -> Unit,
 ) {
 
@@ -166,7 +155,8 @@ fun HomePage(
                                     title = "账易密",
                                     actions = arrayOf(
                                         Action.IconAction(
-                                            Icons.Filled.Search,  Modifier.sharedElementWithCallerManagedVisibility(
+                                            Icons.Filled.Search,
+                                            Modifier.sharedElementWithCallerManagedVisibility(
                                                 rememberSharedContentState("search"),
                                                 inSearch,
                                             )
@@ -233,69 +223,73 @@ fun HomePage(
                                 if (index == 0) {
                                     VSpace(dp = 12)
                                 }
-                                Card(modifier = Modifier.padding(horizontal = 12.dp)) {
-                                    Row(Modifier
-                                        .gestureClick(key = item, onLongClick = {
-                                            if (mViewModel.editting) {
-                                            } else {
-                                                clickListener.invoke(
-                                                    ClickView.Account,
-                                                    value.get(index)
-                                                )
-                                            }
-                                        }) {
-                                            Log.d(
-                                                "sqc",
-                                                "index is $index item name is ${item.accountName}"
-                                            )
-                                            if (mViewModel.editting) {
-//                                        var item = value.get(index)
-                                                if (checkedAccountIds.contains(item.id)) {
-                                                    checkedAccountIds.remove(item.id)
-                                                } else {
-                                                    checkedAccountIds.add(item.id)
-                                                }
-                                            } else {
-                                                //showtip
-//                                        showTipState.value = true
-                                                mViewModel.showTipAccount.value = value.get(index)
-                                            }
-                                        }
-                                        .fillMaxWidth()
-                                        .padding(16.dp),
-                                        verticalAlignment = Alignment.CenterVertically
-                                    ) {
-                                        AnimatedVisibility(visible = mViewModel.editting) {
-                                            Checkbox(
-                                                checked = checkedAccountIds.contains(item.id),
-                                                onCheckedChange = {
-                                                    log("cb index is $index item name is ${item.accountName}")
 
-                                                    if (it) {
-                                                        checkedAccountIds.add(item.id)
-                                                    } else {
-                                                        checkedAccountIds.remove(item.id)
-                                                    }
-                                                },
-                                                colors = CheckboxDefaults.colors(
-                                                    checkedColor = Color.Blue,
-                                                    checkmarkColor = Color.White
-                                                )
-                                            )
-                                        }
+                                AccountItem(item,if(mViewModel.editting) checkedAccountIds else null)
 
-                                        Column {
-                                            Text(
-                                                text = item.platform,
-                                                fontSize = 18.sp,
-                                                fontWeight = FontWeight.Bold
-                                            )
-                                            VSpace(dp = 12)
-                                            Text(text = item.accountName, fontSize = 14.sp)
 
-                                        }
-                                    }
-                                }
+//                                Card(modifier = Modifier.padding(horizontal = 12.dp)) {
+//                                    Row(Modifier
+//                                        .gestureClick(key = item, onLongClick = {
+//                                            if (mViewModel.editting) {
+//                                            } else {
+//                                                clickListener.invoke(
+//                                                    ClickView.Account,
+//                                                    value.get(index)
+//                                                )
+//                                            }
+//                                        }) {
+//                                            Log.d(
+//                                                "sqc",
+//                                                "index is $index item name is ${item.accountName}"
+//                                            )
+//                                            if (mViewModel.editting) {
+////                                        var item = value.get(index)
+//                                                if (checkedAccountIds.contains(item.id)) {
+//                                                    checkedAccountIds.remove(item.id)
+//                                                } else {
+//                                                    checkedAccountIds.add(item.id)
+//                                                }
+//                                            } else {
+//                                                //showtip
+////                                        showTipState.value = true
+//                                                mViewModel.showTipAccount.value = value.get(index)
+//                                            }
+//                                        }
+//                                        .fillMaxWidth()
+//                                        .padding(16.dp),
+//                                        verticalAlignment = Alignment.CenterVertically
+//                                    ) {
+//                                        AnimatedVisibility(visible = mViewModel.editting) {
+//                                            Checkbox(
+//                                                checked = checkedAccountIds.contains(item.id),
+//                                                onCheckedChange = {
+//                                                    log("cb index is $index item name is ${item.accountName}")
+//
+//                                                    if (it) {
+//                                                        checkedAccountIds.add(item.id)
+//                                                    } else {
+//                                                        checkedAccountIds.remove(item.id)
+//                                                    }
+//                                                },
+//                                                colors = CheckboxDefaults.colors(
+//                                                    checkedColor = Color.Blue,
+//                                                    checkmarkColor = Color.White
+//                                                )
+//                                            )
+//                                        }
+//
+//                                        Column {
+//                                            Text(
+//                                                text = item.platform,
+//                                                fontSize = 18.sp,
+//                                                fontWeight = FontWeight.Bold
+//                                            )
+//                                            VSpace(dp = 12)
+//                                            Text(text = item.accountName, fontSize = 14.sp)
+//
+//                                        }
+//                                    }
+//                                }
                                 VSpace(dp = 12)
                             }
                         }
@@ -310,24 +304,24 @@ fun HomePage(
 //                    }
 //                }
 
-                var showTipState = mViewModel.showTip.collectAsState(initial = false)
-                var account = mViewModel.showTipAccount.collectAsState()
-
-                TextDialog(
-                    showState = showTipState as MutableState<Boolean>,
-                    title = "密码提示",
-                    content = account.value?.tip ?: "",
-                    okText = "查看详情",
-                    callbackOk = {
-                        clickListener.invoke(ClickView.Account, mViewModel.showTipAccount.value)
-                        mViewModel.showTipAccount.value = null
-                        showTipState.value = false
-                    },
-                    cancelText = "确定",
-                    callbackDismiss = {
-                        mViewModel.showTipAccount.value = null
-                        showTipState.value = false
-                    })
+//                var showTipState = mViewModel.showTip.collectAsState(initial = false)
+//                var account = mViewModel.showTipAccount.collectAsState()
+//
+//                TextDialog(
+//                    showState = showTipState as MutableState<Boolean>,
+//                    title = "密码提示",
+//                    content = account.value?.tip ?: "",
+//                    okText = "查看详情",
+//                    callbackOk = {
+//                        clickListener.invoke(ClickView.Account, mViewModel.showTipAccount.value)
+//                        mViewModel.showTipAccount.value = null
+//                        showTipState.value = false
+//                    },
+//                    cancelText = "确定",
+//                    callbackDismiss = {
+//                        mViewModel.showTipAccount.value = null
+//                        showTipState.value = false
+//                    })
             }
         }
     }

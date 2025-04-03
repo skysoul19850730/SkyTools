@@ -50,9 +50,7 @@ data class SimpleAccount(
     var accountName: String = "",
     var tip: String = "",
 
-    ){
-    var isChecked = mutableStateOf(false)
-}
+    )
 
 data class AccountWithCate(
     @Embedded

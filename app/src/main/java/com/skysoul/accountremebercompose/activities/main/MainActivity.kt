@@ -63,8 +63,10 @@ class MainActivity : BaseActivity<MainViewModel>() {
             if(showSearch.value) {
                 SearchPage(
                     viewModel, sharedTransitionScope = this@SharedTransitionLayout,
-                    showSearch = showSearch.value
-                ) { }
+                    showSearch = showSearch
+                ) {click,params ->
+
+                }
             }
 
     }

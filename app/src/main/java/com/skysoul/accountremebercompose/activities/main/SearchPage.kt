@@ -16,24 +16,22 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Clear
-import androidx.compose.material.icons.filled.Forward5
-import androidx.compose.material.icons.filled.Navigation
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.LocalTextStyle
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -42,20 +40,19 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.RadialGradient
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.TextStyle.Companion
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.skysoul.accountremebercompose.R
+import com.skysoul.accountremebercompose.activities.main.AccountItemClick.CHECKED_CHANGE
 import com.skysoul.accountremebercompose.ui.HSpace16
+import com.skysoul.accountremebercompose.ui.VSpace
 import com.skysoul.accountremebercompose.ui.bar.topBarPage
 
 /**
@@ -68,16 +65,27 @@ import com.skysoul.accountremebercompose.ui.bar.topBarPage
 fun SearchPage(
     mViewModel: MainViewModel,
     sharedTransitionScope: SharedTransitionScope,
-    showSearch: Boolean,
-    clickListener: (ClickView) -> Unit,
+    showSearch: MutableState<Boolean>,
+    clickListener: (ClickView,any: Any?) -> Unit,
 ) {
     val searchText = remember { mutableStateOf("") }
     val focusRequester = remember { FocusRequester() }
     val focusManager = LocalFocusManager.current
     val keyboardController = LocalSoftwareKeyboardController.current
-    val scrollState = rememberScrollState()
+    val scrollState = rememberLazyListState()
 
-    var expand by remember { mutableStateOf(false) }
+
+
+    LaunchedEffect("") {
+        focusRequester.requestFocus()
+        keyboardController?.show()
+    }
+//    DisposableEffect("") {
+//
+//        onDispose {
+//            keyboardController?.hide()
+//        }
+//    }
 
     with(sharedTransitionScope) {
 
@@ -86,14 +94,17 @@ fun SearchPage(
             Row(
                 Modifier
                     .fillMaxWidth()
-                    .height(36.dp).sharedElementWithCallerManagedVisibility(
+                    .height(36.dp)
+                    .sharedElementWithCallerManagedVisibility(
                         rememberSharedContentState("search"),
-                        showSearch
+                        showSearch.value
                     ),
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 HSpace16()
-                Icon(Icons.AutoMirrored.Filled.ArrowBack, "")
+                Icon(Icons.AutoMirrored.Filled.ArrowBack, "",Modifier.clickable {
+                    showSearch.value = false
+                })
                 HSpace16()
                 BasicTextField(searchText.value,
                     onValueChange = {
@@ -102,15 +113,22 @@ fun SearchPage(
                     modifier = Modifier
                         .weight(1f)
                         .fillMaxHeight()
+                        .focusRequester(focusRequester)
                         .background(Color(0xfff5f6f7), RoundedCornerShape(4.dp))
                         .padding(horizontal = 10.dp, vertical = 4.dp),
                     singleLine = true,
-                    textStyle = LocalTextStyle.current.merge(color=Color(0xffa7aaaf), fontSize = 15.sp),
+                    textStyle = LocalTextStyle.current.merge(
+                        color = Color(0xffa7aaaf),
+                        fontSize = 15.sp
+                    ),
                     keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search),
                     keyboardActions = KeyboardActions {
                         mViewModel.search(searchText.value)
                     },
-                    cursorBrush = Brush.radialGradient(listOf(Color(0xff38d39b),Color(0xff38d39b)), radius = 2.dp.value),
+                    cursorBrush = Brush.radialGradient(
+                        listOf(Color(0xff38d39b), Color(0xff38d39b)),
+                        radius = 2.dp.value
+                    ),
                     decorationBox = { innerTextField ->
 
                         Row(
@@ -127,7 +145,8 @@ fun SearchPage(
                             if (searchText.value.isNotEmpty()) {
                                 Image(
                                     painterResource(R.mipmap.ic_close_bg_grey), "",
-                                    Modifier.size(22.dp)
+                                    Modifier
+                                        .size(22.dp)
                                         .clickable {
                                             searchText.value = ""
                                         })
@@ -141,21 +160,41 @@ fun SearchPage(
 
             }
         }) {
-            val accounts = mViewModel.searchAccounts(searchText.value).collectAsState(arrayListOf())
+            
+            if(searchText.value.isNullOrEmpty()){
 
-            Box(modifier = Modifier.padding(16.dp)){
+                Column {
+                    Text("搜索历史：")
+                    Text("没有搜索历史：")
+                }
 
-                LazyColumn(modifier = Modifier.fillMaxSize()) {
+            }else {
 
-                    itemsIndexed(accounts.value){index,item->
+                val accounts =
+                    mViewModel.searchAccounts(searchText.value).collectAsState(arrayListOf())
 
+                Box(modifier = Modifier.padding(16.dp)) {
+
+                    LazyColumn(modifier = Modifier.fillMaxSize(), state = scrollState) {
+
+                        itemsIndexed(accounts.value) { index, item ->
+
+                            if (index == 0) {
+                                VSpace(dp = 12)
+                            }
+                            AccountItem(item)
+                            VSpace(dp = 12)
+
+                        }
 
 
                     }
 
+                    if(accounts.value.isNullOrEmpty()){
+                        Text("没有搜索到结果")
+                    }
 
                 }
-
             }
 
         }
