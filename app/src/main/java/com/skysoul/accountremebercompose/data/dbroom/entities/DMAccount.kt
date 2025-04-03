@@ -1,5 +1,7 @@
 package com.skysoul.accountremebercompose.data.dbroom.entities
 
+import androidx.compose.animation.fadeOut
+import androidx.compose.runtime.mutableStateOf
 import androidx.room.*
 import com.skysoul.accountremebercompose.data.dbroom.converts.ExtraColumn
 import com.skysoul.accountremebercompose.data.dbroom.converts.ExtraColumnConvert
@@ -48,7 +50,9 @@ data class SimpleAccount(
     var accountName: String = "",
     var tip: String = "",
 
-    )
+    ){
+    var isChecked = mutableStateOf(false)
+}
 
 data class AccountWithCate(
     @Embedded

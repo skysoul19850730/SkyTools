@@ -12,5 +12,8 @@ import kotlinx.coroutines.flow.Flow
  */
 interface AccountRepository {
     fun getAccountAll(userId:Int,cateId:Int): Flow<List<SimpleAccount>>
+    fun searchAccounts(userId:Int,key:String): Flow<List<SimpleAccount>>
     suspend fun addAccount(account:Account):SSResult<Long>
+
+
 }

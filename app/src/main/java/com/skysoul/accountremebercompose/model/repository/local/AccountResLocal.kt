@@ -48,6 +48,10 @@ class AccountResLocal() : AccountRepository, BaseRepository() {
 
     }
 
+    override fun searchAccounts(userId: Int, key: String): Flow<List<SimpleAccount>> {
+        return dao.searchAccounts(userId,key)
+    }
+
     override suspend fun addAccount(account: Account): SSResult<Long> {
         return safeDBCall {
             var result = (if (account.id > 0) {

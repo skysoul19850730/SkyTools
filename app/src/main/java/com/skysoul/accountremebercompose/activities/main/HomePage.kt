@@ -2,7 +2,12 @@ package com.skysoul.accountremebercompose.activities.main
 
 import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.AnimatedVisibilityScope
+import androidx.compose.animation.ExperimentalSharedTransitionApi
+import androidx.compose.animation.SharedTransitionScope
 import androidx.compose.animation.core.MutableTransitionState
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
 import androidx.compose.animation.scaleIn
 import androidx.compose.animation.scaleOut
 import androidx.compose.foundation.Image
@@ -20,6 +25,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListScope
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
@@ -69,7 +76,6 @@ import com.skysoul.accountremebercompose.ui.bar.topBar
 import com.skysoul.accountremebercompose.ui.dialog.TextDialog
 import com.skysoul.accountremebercompose.utils.gestureClick
 import com.skysoul.accountremebercompose.utils.log
-import com.skysoul.utils.ToastUtil
 import kotlinx.coroutines.launch
 
 /**
@@ -90,10 +96,13 @@ enum class ClickView {
     SEARCH,
 }
 
+@OptIn(ExperimentalSharedTransitionApi::class)
 @Composable
 fun HomePage(
     drawerState: DrawerState = rememberDrawerState(DrawerValue.Closed),
     mViewModel: MainViewModel,
+    sharedTransitionScope: SharedTransitionScope,
+    inSearch:Boolean,
     clickListener: (ClickView, any: Any?) -> Unit,
 ) {
 
@@ -102,6 +111,8 @@ fun HomePage(
 //    val orgBarAlpha by animateFloatAsState(targetValue = if(mViewModel.editting) 0f else 1f
 //    , animationSpec = tween(400), label = "原始topbar alpha"
 //    )
+
+    val scrollState = rememberLazyListState()
 
     var checkedAccountIds = remember {
         arrayListOf<Int>().toMutableStateList()
@@ -119,7 +130,7 @@ fun HomePage(
         }
 
     }) {
-        val scrollState = rememberLazyListState()
+
         val showFbt: androidx.compose.runtime.State<Boolean> = remember {
             derivedStateOf {
                 !scrollState.isScrollInProgress
@@ -143,24 +154,32 @@ fun HomePage(
                     ) {
 //                        Crossfade(targetState = mViewModel.editting, label = "exchange bar state") {
                         if (!mViewModel.editting) {
-                            topBar(
-                                actionsLeft = arrayOf(Action.IconAction(Icons.Filled.Menu) {
-                                    scope.launch {
-                                        drawerState.open()
-                                    }
-                                }),
-                                Modifier.shadow(0.dp),
-                                title = "账易密",
-                                actions = arrayOf(
-                                    Action.IconAction(Icons.Filled.Search) {
-                                        clickListener.invoke(SEARCH,null)
-                                    },
+                            with(sharedTransitionScope) {
 
-                                    Action.TextAction("编辑") {
-                                        checkedAccountIds.clear()
-                                        mViewModel.editting = true
-                                    })
-                            )
+                                topBar(
+                                    actionsLeft = arrayOf(Action.IconAction(Icons.Filled.Menu) {
+                                        scope.launch {
+                                            drawerState.open()
+                                        }
+                                    }),
+                                    Modifier.shadow(0.dp),
+                                    title = "账易密",
+                                    actions = arrayOf(
+                                        Action.IconAction(
+                                            Icons.Filled.Search,  Modifier.sharedElementWithCallerManagedVisibility(
+                                                rememberSharedContentState("search"),
+                                                inSearch,
+                                            )
+                                        ) {
+                                            clickListener.invoke(SEARCH, null)
+                                        },
+
+                                        Action.TextAction("编辑") {
+                                            checkedAccountIds.clear()
+                                            mViewModel.editting = true
+                                        })
+                                )
+                            }
                         } else {
                             topBar(
                                 showBack = true,

@@ -45,6 +45,10 @@ class MainViewModel : BaseViewModel() {
         return accountResLocal.getAccountAll(UserManager.getUserId(),cated?.id?:0)
     }
 
+    fun searchAccounts(key:String):Flow<List<SimpleAccount>>{
+        return accountResLocal.searchAccounts(UserManager.getUserId(),key)
+    }
+
     fun initCates(){
         launch {
             cateRepository.getCateAll(UserManager.getUserId()).ifSuccess {
@@ -82,5 +86,8 @@ class MainViewModel : BaseViewModel() {
     fun logout() {
         UserManager.logout()
         finish.postValue(true)
+    }
+
+    fun search(key:String){
     }
 }

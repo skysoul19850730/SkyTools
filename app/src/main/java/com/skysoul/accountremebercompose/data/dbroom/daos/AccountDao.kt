@@ -17,5 +17,6 @@ interface AccountDao: BaseDao<DMAccount> {
     @Query("select * from account where id =:accountId")
     fun getDetailsById(accountId:Int): AccountWithCate
 
-
+    @Query("select id,platform,accountName,tip from account where userId = :userId and accountName LIKE '%'||:key||'%'")
+    fun searchAccounts(userId: Int,key:String): Flow<List<SimpleAccount>>
 }

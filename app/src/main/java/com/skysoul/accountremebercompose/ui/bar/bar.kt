@@ -37,8 +37,8 @@ import com.skysoul.accountremebercompose.ui.HSpace16
  *@Description
  */
 sealed class Action {
-    class TextAction(var s: String, val click: OnClick) : Action()
-    class IconAction(var id: ImageVector, val click: OnClick) : Action()
+    class TextAction(var s: String,val modifier: Modifier = Modifier, val click: OnClick) : Action()
+    class IconAction(var id: ImageVector,val modifier: Modifier = Modifier, val click: OnClick) : Action()
 }
 typealias OnClick = () -> Unit
 
@@ -82,16 +82,17 @@ fun topBar(
                 Spacer(modifier = Modifier.width(68.dp))
             } else {
                 actions.forEach {
+                    HSpace16()
                     when (it) {
                         is Action.TextAction -> {
-                            Text(text = it.s, modifier = Modifier.clickable { it.click.invoke() })
+                            Text(text = it.s, modifier = it.modifier.then(Modifier.clickable { it.click.invoke() }))
                         }
 
                         is Action.IconAction -> {
                             Icon(
                                 imageVector = it.id,
                                 contentDescription = "",
-                                modifier = Modifier.clickable { it.click.invoke() })
+                                modifier = it.modifier.then(Modifier.clickable { it.click.invoke() }))
                         }
                     }
                 }
