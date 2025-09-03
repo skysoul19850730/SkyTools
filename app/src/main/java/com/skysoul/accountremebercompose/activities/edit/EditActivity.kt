@@ -3,6 +3,7 @@ package com.skysoul.accountremebercompose.activities.edit
 import androidx.compose.runtime.Composable
 import com.skysoul.accountremebercompose.base.BaseActivity
 import com.skysoul.accountremebercompose.model.beans.Account
+import com.skysoul.accountremebercompose.ui.WheelPickerDemo
 
 /**
  *@author shenqichao
@@ -12,7 +13,8 @@ import com.skysoul.accountremebercompose.model.beans.Account
 class EditActivity : BaseActivity<EditViewModel>() {
     @Composable
     override fun getPage() {
-        editPage()
+//        editPage()
+        WheelPickerDemo()
     }
 
     override fun startObserver() {
