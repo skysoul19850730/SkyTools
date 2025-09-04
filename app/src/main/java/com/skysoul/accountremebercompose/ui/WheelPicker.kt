@@ -6,15 +6,28 @@ import androidx.compose.foundation.gestures.Orientation
 import androidx.compose.foundation.gestures.draggable
 import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.gestures.scrollBy
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.Text
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.draw.drawWithCache
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.drawscope.scale
+import androidx.compose.ui.graphics.drawscope.withTransform
 import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.text.TextStyle
@@ -23,8 +36,9 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import kotlinx.coroutines.launch
 import kotlin.math.abs
+import kotlin.math.min
+import kotlinx.coroutines.launch
 
 /**
  * WheelPicker 滚轮选择器
@@ -46,7 +60,11 @@ fun <T> WheelPicker(
     startIndex: Int = 0,
     textCreator: (T) -> String = { it.toString() },
     textStyle: TextStyle = TextStyle(fontSize = 16.sp, color = Color.Gray),
-    selectedTextStyle: TextStyle = TextStyle(fontSize = 30.sp, color = Color.Black, fontWeight = FontWeight.Bold),
+    selectedTextStyle: TextStyle = TextStyle(
+        fontSize = 30.sp,
+        color = Color.Blue,
+        fontWeight = FontWeight.Bold
+    ),
     itemHeight: Dp = 40.dp
 ) {
     val itemHeightPx = with(LocalDensity.current) { itemHeight.toPx() }
@@ -125,28 +143,64 @@ fun <T> WheelPicker(
                 val distanceToCenter = abs(index - listState.firstVisibleItemIndex)
 
                 // 根据距离计算透明度，越远越透明
-                val alpha = 1f - (distanceToCenter * 0.3f).coerceAtMost(1f)
+                val alpha = min(0.99f, (1f - (distanceToCenter * 0.3f).coerceAtMost(1f)))
 
                 val offsetRate = offset.toFloat() / itemHeightPx
 
                 var progress = 0f
-                if(index == index2){
-                    progress = 1-offsetRate
-                }else if(index == index2+1){
+                var clipHeigh = 0f
+                if (index == index2) {
+                    progress = 1 - offsetRate
+                    clipHeigh = -offset.toFloat()
+                } else if (index == index2 + 1) {
                     progress = offsetRate
+                    clipHeigh = offset.toFloat()
                 }
+
 
                 val textStyleFinal = interpolateTextStyles(
                     textStyle,
                     selectedTextStyle,
                     progress
                 )
-
+//                var onDraw: DrawScope.() -> Unit by remember { mutableStateOf({}) }
                 Box(
                     modifier = Modifier
                         .height(itemHeight)
-                        .fillMaxWidth().clickable {
-                            if(index != validIndex){
+                        .alpha(0.99f)
+                        .fillMaxWidth()
+                        .drawWithCache {
+                            onDrawWithContent {
+                                withTransform({
+                                    clipRect(
+                                        0f, if (clipHeigh > 0) abs(clipHeigh) else 0f, 2000f,
+                                        if (clipHeigh > 0) itemHeightPx.toFloat() else abs(clipHeigh)
+                                    )
+                                }) {
+                                    this@onDrawWithContent.drawContent()
+                                }
+                                withTransform({
+                                    clipRect(
+                                        0f, if (clipHeigh > 0) 0f else abs(clipHeigh), 2000f,
+                                        if (clipHeigh > 0) (clipHeigh) else itemHeightPx.toFloat()
+                                    )
+//                                        it.scale(1.5f,1.5f)
+                                    scale(1.2f)
+                                }) {
+                                    this@onDrawWithContent.drawContent()
+                                }
+
+//                                drawContent()
+//                                withTransform({
+//                                    clipRect(0f,if(clipHeigh>=0) 0f else abs(clipHeigh),2000f,
+//                                        if(clipHeigh>=0)(clipHeigh) else  itemHeightPx.toFloat())
+//                                }){
+//                                    drawRect(Color.Blue, blendMode = BlendMode.SrcAtop)
+//                                }
+                            }
+                        }
+                        .clickable {
+                            if (index != validIndex) {
                                 coroutineScope.launch {
                                     listState.animateScrollToItem(index)
                                     onItemSelected(index, items[index])
@@ -156,11 +210,26 @@ fun <T> WheelPicker(
                         },
                     contentAlignment = Alignment.Center
                 ) {
+
                     Text(
                         text = textCreator(items[index]),
 //                        style = if (isSelected) selectedTextStyle else textStyle,
                         style = textStyleFinal,
-                        modifier = Modifier.alpha(alpha)
+                        modifier = Modifier.alpha(alpha),
+//                        onTextLayout = {textLayoutResult ->
+//
+//                            onDraw ={
+//                                drawText(textLayoutResult)
+//                                withTransform({
+//                                    clipRect(0f,if(clipHeigh>=0) 0f else abs(clipHeigh),textLayoutResult.size.width.toFloat(),
+//                                        if(clipHeigh>=0)(clipHeigh) else  textLayoutResult.size.height.toFloat())
+//                                }){
+//                                    drawRect(Color.Red, blendMode = BlendMode.SrcAtop)
+//                                }
+//
+//                            }
+//
+//                        }
                     )
                 }
             }
@@ -180,6 +249,7 @@ fun <T> WheelPicker(
         )
     }
 }
+
 /**
  * 在两个TextStyle之间进行插值
  *
@@ -193,11 +263,13 @@ fun interpolateTextStyles(style1: TextStyle, style2: TextStyle, progress: Float)
     val color = lerpColor(style1.color, style2.color, progress)
     val fontWeight = lerpFontWeight(style1.fontWeight, style2.fontWeight, progress)
 
-    return style1.merge(style2.copy(
-        fontSize = fontSize,
-        color = color,
-        fontWeight = fontWeight
-    ))
+    return style1.merge(
+        style2.copy(
+            fontSize = fontSize,
+            color = color,
+            fontWeight = fontWeight
+        )
+    )
 }
 
 /**
@@ -239,6 +311,7 @@ fun lerpFontWeight(weight1: FontWeight?, weight2: FontWeight?, progress: Float):
 fun lerp(start: Float, end: Float, progress: Float): Float {
     return start + (end - start) * progress
 }
+
 @Composable
 fun Divider(modifier: Modifier = Modifier) {
     Box(
