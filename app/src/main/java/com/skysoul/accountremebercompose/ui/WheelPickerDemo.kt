@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 fun WheelPickerDemo() {
     var selectedItem by remember { mutableStateOf("") }
     val items = remember {
-        listOf("选项 1", "选项 2", "选项 3", "选项 4", "选项 5", "选项 6", "选项 7", "选项 8", "选项 9", "选项 10")
+        mutableStateListOf("选项 1", "选项 2", "选项 3", "选项 4", "选项 5", "选项 6", "选项 7", "选项 8", "选项 9", "选项 10")
     }
     
     Column(

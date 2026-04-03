@@ -22,7 +22,7 @@ object MD5 {
                 if (digital < 16) {
                     md5str.append("0")
                 }
-                md5str.append(Integer.toHexString(digital).toUpperCase())
+                md5str.append(Integer.toHexString(digital).uppercase())
             }
         } catch (e: Exception) {
             e.printStackTrace()

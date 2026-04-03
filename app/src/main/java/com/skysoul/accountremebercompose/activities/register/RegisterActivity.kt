@@ -23,7 +23,7 @@ class RegisterActivity : BaseActivity<RegisterViewModel>() {
 
     @Composable
     override fun getPage() {
-        return registerPage()
+        return RegisterPage()
     }
 
 }

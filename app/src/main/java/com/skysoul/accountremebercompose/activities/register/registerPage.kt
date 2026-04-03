@@ -1,19 +1,22 @@
 package com.skysoul.accountremebercompose.activities.register
 
+import android.content.res.Configuration
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.skysoul.accountremebercompose.ui.VSpace16
 import com.skysoul.accountremebercompose.ui.bar.backPage
+import com.skysoul.accountremebercompose.ui.button
 import com.skysoul.accountremebercompose.ui.edittext.EditText
 import com.skysoul.accountremebercompose.ui.edittext.PasswordEditText
+import com.skysoul.accountremebercompose.ui.edittext.TextFieldState
+import com.skysoul.accountremebercompose.ui.theme.AppTheme
 
 /**
  *@author shenqichao
@@ -22,9 +25,30 @@ import com.skysoul.accountremebercompose.ui.edittext.PasswordEditText
  */
 
 @Composable
-fun registerPage(viewModel: RegisterViewModel = viewModel()) {
+fun RegisterPage(viewModel: RegisterViewModel = viewModel()) {
 
-    backPage(title = "注册", onBackPressed = { viewModel.finish.value = true }) {
+    RegisterContent(
+        viewModel.userNameState,
+        viewModel.passwordState,
+        viewModel.passwordAgainState,
+        viewModel.passwordTipState,
+        backClick = { viewModel.finish.value = true },
+        register = {
+            viewModel.register()
+        }
+    )
+}
+
+@Composable
+fun RegisterContent(
+    userNameState: TextFieldState,
+    passwordState: TextFieldState,
+    passwordAgainState: TextFieldState,
+    passwordTipState: TextFieldState,
+    backClick: () -> Unit,
+    register: () -> Unit
+) {
+    backPage(title = "注册", onBackPressed = { backClick.invoke() }) {
 
         Column(
             modifier = Modifier
@@ -33,30 +57,41 @@ fun registerPage(viewModel: RegisterViewModel = viewModel()) {
         ) {
 
             VSpace16()
-            EditText(state = viewModel.userNameState, label = "用户名")
+            EditText(state = userNameState, label = "用户名")
             VSpace16()
-            PasswordEditText(state = viewModel.passwordState, label = "密码")
+            PasswordEditText(state = passwordState, label = "密码")
             VSpace16()
-            PasswordEditText(state = viewModel.passwordAgainState, label = "密码确认")
+            PasswordEditText(state = passwordAgainState, label = "密码确认")
             VSpace16()
-            PasswordEditText(state = viewModel.passwordTipState, label = "密码提示")
+            PasswordEditText(state = passwordTipState, label = "密码提示")
             VSpace16()
-            Button(
-                onClick = {
-                    viewModel.register()
-                },
-                modifier = Modifier
+
+            button(
+                "注册", modifier = Modifier
                     .fillMaxWidth()
                     .padding(vertical = 16.dp),
-                enabled = viewModel.userNameState.enable
-                        && viewModel.passwordState.enable
-                        && viewModel.passwordAgainState.enable
+                enabled = userNameState.enable
+                        && passwordState.enable
+                        && passwordAgainState.enable
             ) {
-                Text(
-                    text = "注册"
-                )
+                register.invoke()
             }
+
         }
     }
+}
 
+@Composable
+@Preview("TestTwo")
+@Preview("TestTwo", uiMode = Configuration.UI_MODE_NIGHT_YES)
+fun testTwo() {
+    AppTheme {
+        RegisterContent(
+            TextFieldState(),
+            TextFieldState(),
+            TextFieldState(),
+            TextFieldState(),
+            {},
+            {})
+    }
 }

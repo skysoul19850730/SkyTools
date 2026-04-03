@@ -1,10 +1,11 @@
 [versions]
-kotlin = "1.15.0"
-appCompat = "1.7.0"
-lifecycle = "2.8.7"
-room = "2.6.1"
-gson = "2.10.1"
+kotlin = "1.18.0"
+appCompat = "1.7.1"
+lifecycle = "2.10.0"
+room = "2.8.4"
+gson = "2.13.2"
 accompanist = "0.36.0"
+activityCompose = "1.13.0"
 
 [plugins]
 
@@ -27,9 +28,9 @@ roomkapt = { module = "androidx.room:room-compiler", version.ref = "room" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 
 compose-constraintlayout = {module="androidx.constraintlayout:constraintlayout-compose",version="1.1.1"}
-compose-activity ={module = "androidx.activity:activity-compose"}
+compose-activity = {module = "androidx.activity:activity-compose", version.ref = "activityCompose"}
 compose-livedata ={module = "androidx.compose.runtime:runtime-livedata"}
-compose-navigation={module="androidx.navigation:navigation-compose",version="2.9.0-alpha09"}
+compose-navigation={module="androidx.navigation:navigation-compose",version="2.9.7"}
 compose-icons = {module="androidx.compose.material:material-icons-extended"}
 compose-material3={module="androidx.compose.material3:material3"}
 

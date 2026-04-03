@@ -3,9 +3,10 @@ package com.skysoul.accountremebercompose.ui
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.focusModifier
 import androidx.compose.ui.unit.dp
 
 /**
@@ -15,27 +16,46 @@ import androidx.compose.ui.unit.dp
  */
 
 @Composable
-fun VSpace(dp:Int){
+fun button(
+    text: String,
+    modifier: Modifier = Modifier,
+    enabled: Boolean = true,
+    onClick: () -> Unit
+) {
+    Button(onClick = {
+        onClick.invoke()
+    }, modifier = modifier, enabled = enabled) {
+        Text(text)
+    }
+
+}
+
+@Composable
+fun VSpace(dp: Int) {
     Spacer(modifier = Modifier.height(dp.dp))
 }
+
 @Composable
-fun HSpace(dp:Int){
+fun HSpace(dp: Int) {
     Spacer(modifier = Modifier.width(dp.dp))
 }
+
 @Composable
-fun VSpace16(){
+fun VSpace16() {
     VSpace(dp = 16)
 }
 
 @Composable
-fun HSpace16(){
+fun HSpace16() {
     HSpace(dp = 16)
 }
+
 @Composable
-fun Int.vSpace(){
+fun Int.vSpace() {
     VSpace(this)
 }
+
 @Composable
-fun Int.hSpace(){
+fun Int.hSpace() {
     HSpace(this)
 }

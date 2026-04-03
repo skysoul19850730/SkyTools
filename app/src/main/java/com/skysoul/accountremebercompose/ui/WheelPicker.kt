@@ -25,6 +25,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.drawWithCache
+import androidx.compose.ui.draw.drawWithContent
+import androidx.compose.ui.graphics.BlendMode
+import androidx.compose.ui.graphics.ClipOp
+import androidx.compose.ui.graphics.ClipOp.Companion
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.scale
 import androidx.compose.ui.graphics.drawscope.withTransform
@@ -111,6 +115,7 @@ fun <T> WheelPicker(
             contentPadding = PaddingValues(top = topPadding, bottom = bottomPadding),
             modifier = Modifier
                 .fillMaxWidth()
+                .alpha(0.99f)
                 .draggable(
                     state = rememberDraggableState { delta ->
                         coroutineScope.launch {
@@ -125,6 +130,26 @@ fun <T> WheelPicker(
                         dragging = false
                     }
                 )
+                .drawWithContent {
+                    withTransform({
+                        clipRect(
+                            0f, (viewPortHeight - itemHeightPx) / 2, 2000f,
+                            (viewPortHeight + itemHeightPx) / 2, ClipOp.Difference
+                        )
+                    }){
+                        this@drawWithContent.drawContent()
+                    }
+                    withTransform({
+                        clipRect(
+                            0f, (viewPortHeight - itemHeightPx) / 2, 2000f,
+                            (viewPortHeight + itemHeightPx) / 2
+                        )
+                        scale(1.1f)
+                    }) {
+                        this@drawWithContent.drawContent()
+                        drawRect(Color.Blue, blendMode = BlendMode.SrcAtop)
+                    }
+                }
         ) {
             items(items.size) { index ->
 
@@ -167,38 +192,7 @@ fun <T> WheelPicker(
                 Box(
                     modifier = Modifier
                         .height(itemHeight)
-                        .alpha(0.99f)
                         .fillMaxWidth()
-                        .drawWithCache {
-                            onDrawWithContent {
-                                withTransform({
-                                    clipRect(
-                                        0f, if (clipHeigh > 0) abs(clipHeigh) else 0f, 2000f,
-                                        if (clipHeigh > 0) itemHeightPx.toFloat() else abs(clipHeigh)
-                                    )
-                                }) {
-                                    this@onDrawWithContent.drawContent()
-                                }
-                                withTransform({
-                                    clipRect(
-                                        0f, if (clipHeigh > 0) 0f else abs(clipHeigh), 2000f,
-                                        if (clipHeigh > 0) (clipHeigh) else itemHeightPx.toFloat()
-                                    )
-//                                        it.scale(1.5f,1.5f)
-                                    scale(1.2f)
-                                }) {
-                                    this@onDrawWithContent.drawContent()
-                                }
-
-//                                drawContent()
-//                                withTransform({
-//                                    clipRect(0f,if(clipHeigh>=0) 0f else abs(clipHeigh),2000f,
-//                                        if(clipHeigh>=0)(clipHeigh) else  itemHeightPx.toFloat())
-//                                }){
-//                                    drawRect(Color.Blue, blendMode = BlendMode.SrcAtop)
-//                                }
-                            }
-                        }
                         .clickable {
                             if (index != validIndex) {
                                 coroutineScope.launch {
@@ -213,23 +207,8 @@ fun <T> WheelPicker(
 
                     Text(
                         text = textCreator(items[index]),
-//                        style = if (isSelected) selectedTextStyle else textStyle,
                         style = textStyleFinal,
                         modifier = Modifier.alpha(alpha),
-//                        onTextLayout = {textLayoutResult ->
-//
-//                            onDraw ={
-//                                drawText(textLayoutResult)
-//                                withTransform({
-//                                    clipRect(0f,if(clipHeigh>=0) 0f else abs(clipHeigh),textLayoutResult.size.width.toFloat(),
-//                                        if(clipHeigh>=0)(clipHeigh) else  textLayoutResult.size.height.toFloat())
-//                                }){
-//                                    drawRect(Color.Red, blendMode = BlendMode.SrcAtop)
-//                                }
-//
-//                            }
-//
-//                        }
                     )
                 }
             }

@@ -4,9 +4,14 @@ import android.database.Cursor
 import android.util.Log
 import com.skysoul.accountremebercompose.MApplication
 import com.skysoul.appassistant.ContextProvider
+import com.skysoul.utils.ToastUtil
 import com.skysoul.utils.log.LogUtil
 import com.skysoul.utils.log.NoLogTrace
 
+
+fun toast(text:String?){
+    ToastUtil.showToast(text)
+}
 
 @NoLogTrace
 fun log(text:String?){

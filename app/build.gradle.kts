@@ -4,19 +4,21 @@ import java.util.Properties
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
+    id("org.jetbrains.kotlin.plugin.compose")
     id("kotlin-kapt")
     id("kotlin-parcelize")
 }
 android {
     namespace = "com.skysoul.accountremebercompose"
-    compileSdk = 35
+    compileSdk = 36
 
     defaultConfig {
         applicationId = "com.skysoul.accountremebercompose"
         minSdk = 24
         targetSdk = 35
         versionCode = 8
-        versionName = "1.0.${autoAddVersionCode()}"
+        versionName = "1.0.7"
+//        versionName = "1.0.${autoAddVersionCode()}"
         vectorDrawables {
             useSupportLibrary = true
         }
@@ -40,15 +42,17 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = "17"
+    kotlin {
+        compilerOptions {
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
+        }
     }
     buildFeatures {
         compose = true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.15"
-    }
+//    composeOptions {
+//        kotlinCompilerExtensionVersion = "1.5.15"
+//    }
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -70,32 +74,23 @@ fun autoAddVersionCode():Int {
 dependencies {
 
 
-    implementation(project(":ComposeLib"))
+    implementation(project(":ComposeLib"))  // ComposeLib 已经用 api 暴露了所有 Compose 依赖
     implementation(project(":appAssistant"))
 
 
     implementation(libs.gson)
     implementation(libs.bundles.room)
 
-
-    implementation(platform("androidx.compose:compose-bom:2024.10.01"))
-//    implementation("androidx.compose.ui:ui")
-//    implementation("androidx.compose.ui:ui-graphics")
-//    implementation("androidx.compose.ui:ui-tooling-preview")
-//    implementation("androidx.compose.material3:material3")
-//    implementation(libs.bundles.compose)
-//    implementation(libs.bundles.lifecycle)
-//    implementation(libs.corektx)
-//    implementation(libs.appCompat)
-//    implementation(libs.bundles.accompanist)
-
-    api("androidx.core:core-ktx:1.15.0")
-    api("androidx.appcompat:appcompat:1.7.0")
-    api("com.google.android.material:material:1.12.0")
+    // 移除重复的 Compose 依赖，全部由 ComposeLib 提供
+    // implementation(platform("androidx.compose:compose-bom:2026.03.01"))
+    // implementation("androidx.compose.ui:ui")
+    // implementation("androidx.compose.ui:ui-graphics")
+    // implementation("androidx.compose.ui:ui-tooling-preview")
+    // implementation("androidx.compose.material3:material3")
+    // implementation(libs.bundles.compose)
 
 
-
-    kapt("androidx.room:room-compiler:2.6.1")
+    kapt(libs.roomkapt)
 
 
 }

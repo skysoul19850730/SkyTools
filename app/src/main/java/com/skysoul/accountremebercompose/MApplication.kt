@@ -1,9 +1,7 @@
 package com.skysoul.accountremebercompose
 
 import android.app.Application
-import android.content.Context
 import com.skysoul.accountremebercompose.utils.log
-import com.skysoul.appassistant.ActivityCallbackImpl
 import com.skysoul.appassistant.ActivityStackManager
 import com.skysoul.appassistant.ContextProvider
 
