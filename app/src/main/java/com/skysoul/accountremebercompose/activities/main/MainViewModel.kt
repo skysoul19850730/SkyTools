@@ -42,15 +42,15 @@ class MainViewModel : BaseViewModel() {
     var cateList = mutableStateListOf<Cate>()
     var cateSelected: Cate? by mutableStateOf(null)
 
-    fun accountsFlow(cated:Cate):Flow<List<SimpleAccount>>{
-        return accountResLocal.getAccountAll(UserManager.getUserId(),cated?.id?:0)
+    fun accountsFlow(cate:Cate):Flow<List<SimpleAccount>>{
+        return accountResLocal.getAccountAll(UserManager.getCurMemberId(),cate.id)
     }
 
     fun searchAccounts(key:String):Flow<List<SimpleAccount>>{
         if(key.isEmpty()){
             return emptyFlow()
         }
-        return accountResLocal.searchAccounts(UserManager.getUserId(),key)
+        return accountResLocal.searchAccounts(UserManager.getCurMemberId(),key)
     }
 
     fun initCates(){

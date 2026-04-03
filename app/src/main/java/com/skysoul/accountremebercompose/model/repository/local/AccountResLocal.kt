@@ -43,13 +43,13 @@ class AccountResLocal() : AccountRepository, BaseRepository() {
     }
 
 
-    override fun getAccountAll(userId: Int,cateId:Int): Flow<List<SimpleAccount>> {
-        return dao.getSimpleAccounts(userId = userId,cateId)
+    override fun getAccountAll(memberId: Int,cateId:Int): Flow<List<SimpleAccount>> {
+        return dao.getSimpleAccounts(memberId = memberId,cateId)
 
     }
 
-    override fun searchAccounts(userId: Int, key: String): Flow<List<SimpleAccount>> {
-        return dao.searchAccounts(userId,key)
+    override fun searchAccounts(memberId: Int, key: String): Flow<List<SimpleAccount>> {
+        return dao.searchAccounts(memberId,key)
     }
 
     override suspend fun addAccount(account: Account): SSResult<Long> {

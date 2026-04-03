@@ -1,16 +1,19 @@
 package com.skysoul.accountremebercompose.activities.register2
 
+import android.graphics.Bitmap
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.MutableLiveData
 import com.skysoul.accountremebercompose.base.BaseViewModel
+import com.skysoul.accountremebercompose.data.dbroom.entities.DMMember
 import com.skysoul.accountremebercompose.launch
 import com.skysoul.accountremebercompose.managers.UserManager
 import com.skysoul.accountremebercompose.model.api.NilException
 import com.skysoul.accountremebercompose.model.beans.User
 import com.skysoul.accountremebercompose.model.repository.local.UserRepositoryLocal
 import com.skysoul.accountremebercompose.ui.edittext.TextFieldState
+import com.skysoul.accountremebercompose.utils.toBlob
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlin.coroutines.resume
 
@@ -42,7 +45,7 @@ class RegisterViewModel2 : BaseViewModel() {
         }
     }
 
-    fun doOver() {
+    fun doOver(bitmap: Bitmap?=null) {
         userNameState.checkNull("昵称不能为空") ?: return
         var userLogined = UserManager.getUser() ?: return
         launch {
@@ -73,7 +76,15 @@ class RegisterViewModel2 : BaseViewModel() {
             user.userId = userLogined.userId
             user.nickName = userNameState.text
 
+            val dmMember = DMMember(0,user.userId,user.nickName,
+                bitmap?.toBlob() )
+
+            userRepository.addMember(dmMember)
+
+
             userRepository.updateUserBaseInfo(user)
+
+
             userLogined.nickName = user.nickName
             userRepository.updateUserPassword4ViewAccount(
                 userLogined.userId,
@@ -85,6 +96,8 @@ class RegisterViewModel2 : BaseViewModel() {
             }.ifError {
                 showToast("信息填写有误")
             }
+
+
 
         }
     }

@@ -10,13 +10,13 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface AccountDao: BaseDao<DMAccount> {
 
-    @Query("select id,platform,accountName,tip from account where userId = :userId and (:cateId = cateId or :cateId = 0)")
-    fun getSimpleAccounts(userId:Int,cateId:Int):Flow<List<SimpleAccount>>
+    @Query("select id,platform,accountName,tip from account where memberId = :memberId and (:cateId = cateId or :cateId = 0)")
+    fun getSimpleAccounts(memberId:Int,cateId:Int):Flow<List<SimpleAccount>>
 
     @Transaction
     @Query("select * from account where id =:accountId")
     fun getDetailsById(accountId:Int): AccountWithCate
 
-    @Query("select id,platform,accountName,tip from account where userId = :userId and (accountName LIKE '%'||:key||'%' or  platform LIKE '%'||:key||'%')")
-    fun searchAccounts(userId: Int,key:String): Flow<List<SimpleAccount>>
+    @Query("select id,platform,accountName,tip from account where memberId = :memberId and (accountName LIKE '%'||:key||'%' or  platform LIKE '%'||:key||'%')")
+    fun searchAccounts(memberId: Int,key:String): Flow<List<SimpleAccount>>
 }

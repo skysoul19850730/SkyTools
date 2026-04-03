@@ -4,7 +4,18 @@ import androidx.room.*
 import com.skysoul.accountremebercompose.data.dbroom.converts.MD5Convert
 import com.skysoul.accountremebercompose.data.dbroom.converts.MDPasswordInfo
 
-@Entity(tableName = "user",indices = [Index(value = ["userName"],unique = true)])
+@Entity(
+    tableName = "user",
+    indices = [Index(value = ["userName"], unique = true)],
+    foreignKeys = [
+        ForeignKey(
+            entity = DMMember::class,
+            parentColumns = ["id"],
+            childColumns = ["currentDMMemberId"],
+            onDelete = ForeignKey.SET_NULL  // Member 删除时自动设为 NULL
+        )
+    ]
+)
 @TypeConverters(MD5Convert::class)
 data class DMUser(
         @PrimaryKey(autoGenerate = true)
@@ -18,7 +29,8 @@ data class DMUser(
 
         var passwordView: MDPasswordInfo = MDPasswordInfo(""),
         var passwordViewTip :String ="",
-        var isSamePassword:Boolean = true
+        var isSamePassword:Boolean = true,
+        var currentDMMemberId: Int? = null  // 可空，NULL 不触发外键检查
 
 ) {
         fun updateBaseInfo(nickName2Update: String) {

@@ -53,7 +53,7 @@ class RegisterViewModel : BaseViewModel() {
                 cateRepository.addCate(Cate(0,"默认分类",it.userId))
                 next.postValue(true)
             }.ifError {
-                showToast("注册失败")
+                showToast("注册失败 ${it}")
             }
 
         }

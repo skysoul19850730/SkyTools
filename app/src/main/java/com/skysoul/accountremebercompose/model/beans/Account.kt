@@ -19,7 +19,7 @@ data class Account(
     var bindmail: String = "",
     var create_time: String = "",
     var accountName: String = "",
-    var userId: Int = 0,
+    var memberId: Int = 0,
     var cate: Cate? = null,
     var extraColumnList: List<ExtraColumn> = arrayListOf()
 ) : Parcelable, Cloneable {
@@ -34,7 +34,7 @@ data class Account(
         account.bindmail = bindmail
         account.create_time = create_time
         account.accountName = accountName
-        account.userId = userId
+        account.memberId = memberId
 
         account.cate = cate
         account.extraColumnList = extraColumnList
@@ -52,7 +52,7 @@ data class Account(
             bindmail,
             create_time,
             cate?.id ?: 0,
-            userId,
+            memberId,
             extraColumnList
         )
     }
@@ -68,7 +68,7 @@ data class Account(
                     bindMail,
                     createTime,
                     accountName,
-                    userId,
+                    memberId,
                     Cate.fromDmCate(dmAccount.cate),
                     arrayListOf<ExtraColumn>().apply { addAll(externalColumns) })
             }

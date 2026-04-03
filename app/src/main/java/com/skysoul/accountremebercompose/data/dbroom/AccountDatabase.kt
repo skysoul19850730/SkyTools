@@ -8,20 +8,25 @@ import com.skysoul.accountremebercompose.MApplication
 import com.skysoul.accountremebercompose.data.dbroom.daos.AccountDao
 import com.skysoul.accountremebercompose.data.dbroom.daos.CateDao
 import com.skysoul.accountremebercompose.data.dbroom.daos.ExtrasDao
+import com.skysoul.accountremebercompose.data.dbroom.daos.MemberDao
 import com.skysoul.accountremebercompose.data.dbroom.daos.UserDao
 import com.skysoul.accountremebercompose.data.dbroom.entities.DMAccount
 import com.skysoul.accountremebercompose.data.dbroom.entities.DMCate
 import com.skysoul.accountremebercompose.data.dbroom.entities.DMExtraColumn
+import com.skysoul.accountremebercompose.data.dbroom.entities.DMMember
 import com.skysoul.accountremebercompose.data.dbroom.entities.DMUser
 import com.skysoul.appassistant.ContextProvider
 
 @Database(version = 1,exportSchema = false,
-        entities = arrayOf(DMAccount::class, DMCate::class, DMUser::class, DMExtraColumn::class))
+        entities = [DMAccount::class, DMCate::class, DMUser::class, DMExtraColumn::class, DMMember::class]
+)
 abstract class AccountDatabase:RoomDatabase() {
     abstract fun userDao(): UserDao
     abstract fun cateDao(): CateDao
     abstract fun accountDao(): AccountDao
     abstract fun extrasDao(): ExtrasDao
+
+    abstract fun memberDao(): MemberDao
 
     companion object{
         private var INSTANCE: AccountDatabase?=null

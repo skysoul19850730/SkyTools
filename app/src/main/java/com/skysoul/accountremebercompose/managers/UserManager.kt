@@ -13,7 +13,7 @@ import com.skysoul.accountremebercompose.utils.SharedPreferencesManager
  */
 object UserManager {
 
-    val userLiveData :MutableLiveData<User> = MutableLiveData(null)
+    val userLiveData: MutableLiveData<User?> = MutableLiveData(null)
 
     private var mUser: User? = null
 
@@ -24,11 +24,15 @@ object UserManager {
     }
 
     fun getUserId(): Int {
-        return getUser()?.userId ?: 0
+        return getUser()?.currentMember?.id ?: 0
     }
 
-    fun logout(){
-        SharedPreferencesManager.setInt(SharedPreferencesManager.userid,0)
+    fun getCurMemberId(): Int {
+        return getUser()?.currentMember?.id ?: 0
+    }
+
+    fun logout() {
+        SharedPreferencesManager.setInt(SharedPreferencesManager.userid, 0)
         userLiveData.postValue(null)
     }
 
@@ -41,6 +45,7 @@ object UserManager {
                     userLiveData.postValue(mUser)
                     data
                 }
+
                 else -> null
             }
         }

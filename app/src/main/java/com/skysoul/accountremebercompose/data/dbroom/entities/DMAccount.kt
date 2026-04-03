@@ -16,15 +16,15 @@ import com.skysoul.accountremebercompose.data.dbroom.converts.ExtraColumnConvert
             onDelete = ForeignKey.SET_DEFAULT
         ),
         ForeignKey(
-            entity = DMUser::class,
+            entity = DMMember::class,
             parentColumns = ["id"],
-            childColumns = ["userId"],
+            childColumns = ["memberId"],
             onDelete = ForeignKey.CASCADE
         )
     ],
     indices = [
         Index("cateId"),
-        Index("userId"),
+        Index("memberId"),
 
     ]
 )
@@ -40,7 +40,7 @@ data class DMAccount(
     var bindMail: String = "",
     var createTime: String = "",
     var cateId: Int = 1,
-    var userId: Int = 0,
+    var memberId: Int = 0,
     var externalColumns: List<ExtraColumn> = arrayListOf()
 )
 

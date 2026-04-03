@@ -1,5 +1,7 @@
 import java.io.FileInputStream
 import java.util.Properties
+import org.gradle.kotlin.dsl.implementation
+import org.gradle.kotlin.dsl.invoke
 
 plugins {
     id("com.android.application")
@@ -72,8 +74,9 @@ fun autoAddVersionCode():Int {
 }
 
 dependencies {
-
-
+    implementation(fileTree("libs") {
+        include("*.jar", "*.aar")
+    })
     implementation(project(":ComposeLib"))  // ComposeLib 已经用 api 暴露了所有 Compose 依赖
     implementation(project(":appAssistant"))
 

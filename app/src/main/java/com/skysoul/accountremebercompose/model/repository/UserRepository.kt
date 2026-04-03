@@ -1,5 +1,6 @@
 package com.skysoul.accountremebercompose.model.repository
 
+import com.skysoul.accountremebercompose.data.dbroom.entities.DMMember
 import com.skysoul.accountremebercompose.model.SSResult
 import com.skysoul.accountremebercompose.data.dbroom.entities.NoLoginUser
 import com.skysoul.accountremebercompose.model.beans.User
@@ -26,4 +27,5 @@ interface UserRepository {
 
     suspend fun getUserTipByUsername(userName: String):SSResult<String>
 
+    suspend fun addMember(member: DMMember): SSResult<DMMember>
 }

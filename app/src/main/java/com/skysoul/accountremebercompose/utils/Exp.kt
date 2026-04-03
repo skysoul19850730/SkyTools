@@ -1,12 +1,15 @@
 package com.skysoul.accountremebercompose.utils
 
 import android.database.Cursor
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.util.Log
 import com.skysoul.accountremebercompose.MApplication
 import com.skysoul.appassistant.ContextProvider
 import com.skysoul.utils.ToastUtil
 import com.skysoul.utils.log.LogUtil
 import com.skysoul.utils.log.NoLogTrace
+import java.io.ByteArrayOutputStream
 
 
 fun toast(text:String?){
@@ -69,4 +72,17 @@ fun Cursor.getStringNotNull(columnIndex:Int):String{
     var result = getString(columnIndex)
     if(result==null)return ""
     return result
+}
+
+
+// 转换函数
+fun Bitmap.toBlob(): ByteArray {
+    val outputStream = ByteArrayOutputStream()
+    compress(Bitmap.CompressFormat.PNG, 100, outputStream)
+    return outputStream.toByteArray()
+}
+
+// Blob → Bitmap
+fun ByteArray.toBitmap(): Bitmap? {
+    return BitmapFactory.decodeByteArray(this, 0, this.size)
 }

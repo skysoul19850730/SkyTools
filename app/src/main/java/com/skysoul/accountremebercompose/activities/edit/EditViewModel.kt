@@ -100,7 +100,7 @@ class EditViewModel : BaseViewModel() {
         accoutNew.bindphone = phoneEditBean.input
 
         accoutNew.create_time = System.currentTimeMillis().toString()
-        accoutNew.userId = UserManager.getUser()?.userId ?: 0
+        accoutNew.memberId = UserManager.getUser()?.currentMember?.id ?: 0
         accoutNew.cate = cateSelected
         accoutNew.extraColumnList = externalColumn
 

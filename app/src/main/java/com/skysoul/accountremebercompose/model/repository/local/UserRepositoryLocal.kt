@@ -10,6 +10,7 @@ import com.skysoul.accountremebercompose.config.StaticConfig
 import com.skysoul.accountremebercompose.data.dbroom.AccountDatabase
 import com.skysoul.accountremebercompose.data.dbroom.converts.MDPasswordInfo
 import com.skysoul.accountremebercompose.data.dbroom.daos.UserDao
+import com.skysoul.accountremebercompose.data.dbroom.entities.DMMember
 import com.skysoul.accountremebercompose.data.dbroom.entities.DMUser
 import com.skysoul.accountremebercompose.data.dbroom.entities.NoLoginUser
 import com.skysoul.accountremebercompose.utils.MD5
@@ -21,6 +22,7 @@ class UserRepositoryLocal : UserRepository, BaseRepository() {
 
     private val errorMessage = "操作出现异常"
     private val userDao = AccountDatabase.getInstance().userDao()
+    private val memberDao = AccountDatabase.getInstance().memberDao()
 
     private suspend fun <T : Any> safeDBCall(call: suspend () -> SSResult<T>?): SSResult<T> {
         return safeApiCall({
@@ -42,7 +44,7 @@ class UserRepositoryLocal : UserRepository, BaseRepository() {
 
     override suspend fun getUserById(userId: Int): SSResult<User> {
         return safeDBCall {
-            userDao.getUserById(userId)?.run {
+            userDao.getUserWithMembers(userId)?.run {
                 SSResult.Success(User(this))
             }
         }
@@ -192,5 +194,17 @@ class UserRepositoryLocal : UserRepository, BaseRepository() {
             val exist = userDao.getUserName(userName)
             SSResult.Success(!exist.isNullOrEmpty())
         }
+    }
+
+    override suspend fun addMember(member: DMMember): SSResult<DMMember> {
+        return safeDBCall {
+            memberDao.insert(member).run {
+                memberDao.getMemberById(this.toInt())?.run {
+                    SSResult.Success(this)
+                }
+            }
+
+        }
+
     }
 }
