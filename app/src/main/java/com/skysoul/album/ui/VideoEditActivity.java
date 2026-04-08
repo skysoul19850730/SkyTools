@@ -46,7 +46,7 @@
 //
 //    @Override
 //    protected int getLayoutId() {
-//        return _AlbumUtils.getResLayoutId(this, "wpsdk_album_activity_video_edit");
+//        return _AlbumUtils.getResLayoutId(this, "album_activity_video_edit");
 //    }
 //
 //    @Override
@@ -64,7 +64,7 @@
 //            }
 //        }
 //
-//        mUGCKitVideoCut = findViewById(_AlbumUtils.getResViewId(this, "wpsdk_album_mUGCKitVideoCut"));
+//        mUGCKitVideoCut = findViewById(_AlbumUtils.getResViewId(this, "album_mUGCKitVideoCut"));
 //        mUGCKitVideoCut.setVideoPath(mMediaInfo.path);
 //        mUGCKitVideoCut.getTitleBar().setOnBackClickListener(new View.OnClickListener() {
 //            @Override

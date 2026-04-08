@@ -33,9 +33,9 @@
 //    }
 //
 //    private void initViews() {
-//        inflate(getContext(), _AlbumUtils.getResLayoutId(getContext(), "wpsdk_album_ugckit_video_play_layout"), this);
+//        inflate(getContext(), _AlbumUtils.getResLayoutId(getContext(), "album_ugckit_video_play_layout"), this);
 //
-//        mLayoutPlayer = (FrameLayout) findViewById(_AlbumUtils.getResViewId(getContext(), "wpsdk_album_layout_player"));
+//        mLayoutPlayer = (FrameLayout) findViewById(_AlbumUtils.getResViewId(getContext(), "album_layout_player"));
 //    }
 //
 //    /**

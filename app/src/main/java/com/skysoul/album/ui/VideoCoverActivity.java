@@ -60,15 +60,15 @@
 //
 //    @Override
 //    protected int getLayoutId() {
-//        return _AlbumUtils.getResLayoutId(this, "wpsdk_album_activity_video_cover");
+//        return _AlbumUtils.getResLayoutId(this, "album_activity_video_cover");
 //    }
 //
 //    @Override
 //    protected void onCreate(Bundle savedInstanceState) {
 //        super.onCreate(savedInstanceState);
-//        _AlbumUtils.topbarApi35(this, "wpsdk_album_head");
+//        _AlbumUtils.topbarApi35(this, "album_head");
 //        thumbnailWidth = _AlbumUtils.dp2px(45);
-//        View view = findViewById(_AlbumUtils.getResViewId(this, "wpsdk_album_cover_layout"));
+//        View view = findViewById(_AlbumUtils.getResViewId(this, "album_cover_layout"));
 //        if (mUseLandscape) {
 //            thumbnailCount = (getResources().getDisplayMetrics().widthPixels - _AlbumUtils.dp2px(80)) / thumbnailWidth;
 //        } else {
@@ -86,15 +86,15 @@
 //            }
 //        }
 //
-//        findViewById(_AlbumUtils.getResViewId(this, "wpsdk_album_tvBack")).setOnClickListener(new View.OnClickListener() {
+//        findViewById(_AlbumUtils.getResViewId(this, "album_tvBack")).setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
 //                onBackPressed();
 //            }
 //        });
-//        seekBar = findViewById(_AlbumUtils.getResViewId(this, "wpsdk_album_seekbar"));
+//        seekBar = findViewById(_AlbumUtils.getResViewId(this, "album_seekbar"));
 //
-//        HorizontalListView horizontalListView = (HorizontalListView) findViewById(_AlbumUtils.getResViewId(this, "wpsdk_album_coverList"));
+//        HorizontalListView horizontalListView = (HorizontalListView) findViewById(_AlbumUtils.getResViewId(this, "album_coverList"));
 //        horizontalListView.setAdapter(mImageAdapter);
 //        loadData();
 //
@@ -125,7 +125,7 @@
 //
 //
 //        // 完成，保存选择的封面图
-//        findViewById(_AlbumUtils.getResViewId(this, "wpsdk_album_tvSave")).setOnClickListener(new View.OnClickListener() {
+//        findViewById(_AlbumUtils.getResViewId(this, "album_tvSave")).setOnClickListener(new View.OnClickListener() {
 //            @Override
 //            public void onClick(View v) {
 //                if (videoFileInfo == null) return;
@@ -186,7 +186,7 @@
 //                                @Override
 //                                public void run() {
 //                                    TXVideoEditConstants.TXPreviewParam param = new TXVideoEditConstants.TXPreviewParam();
-//                                    param.videoView = findViewById(_AlbumUtils.getResViewId(VideoCoverActivity.this, "wpsdk_album_layout_player"));
+//                                    param.videoView = findViewById(_AlbumUtils.getResViewId(VideoCoverActivity.this, "album_layout_player"));
 //                                    ;
 //                                    param.renderMode = TXVideoEditConstants.PREVIEW_RENDER_MODE_FILL_EDGE;
 //                                    tXVideoEditer.initWithPreview(param);
@@ -284,9 +284,9 @@
 //
 //            if (convertView == null) {
 //                convertView = LayoutInflater.from(parent.getContext())
-//                        .inflate(_AlbumUtils.getResLayoutId(parent.getContext(), "wpsdk_album_item_cover"), parent, false);
+//                        .inflate(_AlbumUtils.getResLayoutId(parent.getContext(), "album_item_cover"), parent, false);
 //            }
-//            ImageView ivCover = convertView.findViewById(_AlbumUtils.getResViewId(parent.getContext(), "wpsdk_album_img_cover"));
+//            ImageView ivCover = convertView.findViewById(_AlbumUtils.getResViewId(parent.getContext(), "album_img_cover"));
 //            ivCover.setImageBitmap(dataList.get(position).bitmap);
 ////            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 ////                ivCover.setClipToOutline(true);

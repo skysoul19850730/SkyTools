@@ -51,7 +51,7 @@
 //
 //    @Override
 //    protected int getLayoutId() {
-//        return _AlbumUtils.getResLayoutId(this, "wpsdk_album_activity_media_take");
+//        return _AlbumUtils.getResLayoutId(this, "album_activity_media_take");
 //    }
 //
 //    @Override

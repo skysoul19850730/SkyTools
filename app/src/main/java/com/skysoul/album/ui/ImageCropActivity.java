@@ -58,7 +58,7 @@ public class ImageCropActivity extends AlbumBaseActivity {
 
     @Override
     protected int getLayoutId() {
-        return _AlbumUtils.getResLayoutId(this, "wpsdk_album_activity_image_crop_layout");
+        return _AlbumUtils.getResLayoutId(this, "album_activity_image_crop_layout");
     }
 
     @Override

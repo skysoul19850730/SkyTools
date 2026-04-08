@@ -46,11 +46,11 @@
 //    }
 //
 //    private void initViews() {
-//        inflate(getContext(), _AlbumUtils.getResLayoutId(getContext(), "wpsdk_album_ugckit_video_cut_kit"), this);
+//        inflate(getContext(), _AlbumUtils.getResLayoutId(getContext(), "album_ugckit_video_cut_kit"), this);
 //
-//        mTextDuration = (TextView) findViewById(_AlbumUtils.getResViewId(getContext(), "wpsdk_album_tv_choose_duration"));
-//        mImageRotate = (ImageView) findViewById(_AlbumUtils.getResViewId(getContext(), "wpsdk_album_iv_rotate"));
-//        mVideoCutView = (VideoCutView) findViewById(_AlbumUtils.getResViewId(getContext(), "wpsdk_album_video_edit_view"));
+//        mTextDuration = (TextView) findViewById(_AlbumUtils.getResViewId(getContext(), "album_tv_choose_duration"));
+//        mImageRotate = (ImageView) findViewById(_AlbumUtils.getResViewId(getContext(), "album_iv_rotate"));
+//        mVideoCutView = (VideoCutView) findViewById(_AlbumUtils.getResViewId(getContext(), "album_video_edit_view"));
 //
 //        mImageRotate.setOnClickListener(this);
 //        mVideoCutView.setCutChangeListener(this);

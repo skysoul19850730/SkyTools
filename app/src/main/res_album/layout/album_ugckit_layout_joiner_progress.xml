@@ -7,7 +7,7 @@
     android:background="#000">
 
     <TextView
-        android:id="@+id/wpsdk_album_joiner_tv_msg"
+        android:id="@+id/album_joiner_tv_msg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
@@ -20,26 +20,26 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/wpsdk_album_joiner_tv_msg"
+        android:layout_below="@id/album_joiner_tv_msg"
         android:layout_marginLeft="50dp"
         android:layout_marginRight="50dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
         <com.skysoul.album.view.NumberProgressBar
-            android:id="@+id/wpsdk_album_joiner_pb_loading"
+            android:id="@+id/album_joiner_pb_loading"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1" />
 
         <ImageView
-            android:id="@+id/wpsdk_album_joiner_iv_stop"
+            android:id="@+id/album_joiner_iv_stop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="15dp"
 
             android:padding="5dp"
-            android:src="@drawable/wpsdk_album_ugckit_jointer_btn_cancel" />
+            android:src="@drawable/album_ugckit_jointer_btn_cancel" />
     </LinearLayout>
 
 </RelativeLayout>

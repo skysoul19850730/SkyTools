@@ -36,10 +36,6 @@ import com.skysoul.album.core.MediaLoadManager;
 import com.skysoul.album.util.AlbumConstant;
 import com.skysoul.album.util._AlbumUtils;
 import com.skysoul.album.util._UriUtils;
-//import com.wpsdk.permission.newapi.PermissionUtil;
-//
-//import com.wpsdk.permission.open.OnePermissionListener;
-//import com.wpsdk.permission.open.OnePermissionUtil;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -75,7 +71,7 @@ public class ImageSelectorActivity extends AlbumBaseActivity {
 
     @Override
     protected int getLayoutId() {
-        return _AlbumUtils.getResLayoutId(this, "wpsdk_album_activity_image_selector_layout");
+        return _AlbumUtils.getResLayoutId(this, "album_activity_image_selector_layout");
     }
 
     @Override
@@ -461,7 +457,7 @@ public class ImageSelectorActivity extends AlbumBaseActivity {
             final ImageHolder imageHolder;
             if (convertView == null) {
                 imageHolder = new ImageHolder();
-                convertView = LayoutInflater.from(parent.getContext()).inflate(_AlbumUtils.getResLayoutId(ImageSelectorActivity.this, "wpsdk_album_image_selector_item"), parent, false);
+                convertView = LayoutInflater.from(parent.getContext()).inflate(_AlbumUtils.getResLayoutId(ImageSelectorActivity.this, "album_image_selector_item"), parent, false);
                 imageHolder.shade = convertView.findViewById(_AlbumUtils.getResViewId(ImageSelectorActivity.this, "_album_shade"));
                 imageHolder.takePhoto = convertView.findViewById(_AlbumUtils.getResViewId(ImageSelectorActivity.this, "_album_takePhoto"));
                 imageHolder.tvVideoDuration = convertView.findViewById(_AlbumUtils.getResViewId(ImageSelectorActivity.this, "_album_tv_video_duration"));
@@ -496,10 +492,10 @@ public class ImageSelectorActivity extends AlbumBaseActivity {
 
                 if (mediaInfo.isVideo()) {
                     imageLoader.loadImage(imageHolder.img, mediaInfo.path);
-                    imageHolder.tvIndex.setBackgroundResource(_AlbumUtils.getResDrawableId(ImageSelectorActivity.this, "wpsdk_album_shape_video_selected_bg"));
+                    imageHolder.tvIndex.setBackgroundResource(_AlbumUtils.getResDrawableId(ImageSelectorActivity.this, "album_shape_video_selected_bg"));
                 } else {
                     imageLoader.loadImage(imageHolder.img, mediaInfo.getShowPath());
-                    imageHolder.tvIndex.setBackgroundResource(_AlbumUtils.getResDrawableId(ImageSelectorActivity.this, "wpsdk_album_shape_image_selected_bg"));
+                    imageHolder.tvIndex.setBackgroundResource(_AlbumUtils.getResDrawableId(ImageSelectorActivity.this, "album_shape_image_selected_bg"));
                 }
 
                 imageHolder.selectLayout.setSelected(mediaInfo.isChecked);
@@ -620,9 +616,9 @@ public class ImageSelectorActivity extends AlbumBaseActivity {
             if (convertView == null) {
                 folderHolder = new FolderHolder();
                 if (mType == ActivityInfo.SCREEN_ORIENTATION_PORTRAIT) {
-                    convertView = LayoutInflater.from(parent.getContext()).inflate(_AlbumUtils.getResLayoutId(ImageSelectorActivity.this, "wpsdk_album_folder_item"), parent, false);
+                    convertView = LayoutInflater.from(parent.getContext()).inflate(_AlbumUtils.getResLayoutId(ImageSelectorActivity.this, "album_folder_item"), parent, false);
                 } else {
-                    convertView = LayoutInflater.from(parent.getContext()).inflate(_AlbumUtils.getResLayoutId(ImageSelectorActivity.this, "wpsdk_album_landscape_folder_item"), parent, false);
+                    convertView = LayoutInflater.from(parent.getContext()).inflate(_AlbumUtils.getResLayoutId(ImageSelectorActivity.this, "album_landscape_folder_item"), parent, false);
                 }
                 folderHolder.folderImage = convertView.findViewById(_AlbumUtils.getResViewId(ImageSelectorActivity.this, "_album_iv_folder_img"));
                 folderHolder.folderName = convertView.findViewById(_AlbumUtils.getResViewId(ImageSelectorActivity.this, "_album_tv_folder_name"));

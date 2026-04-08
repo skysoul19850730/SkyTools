@@ -34,12 +34,12 @@
 //    }
 //
 //    private void initViews() {
-//        inflate(getContext(), _AlbumUtils.getResLayoutId(getContext(), "wpsdk_album_ugckit_video_cut_layout"), this);
+//        inflate(getContext(), _AlbumUtils.getResLayoutId(getContext(), "album_ugckit_video_cut_layout"), this);
 //
-//        mTitleBar = findViewById(_AlbumUtils.getResViewId(getContext(), "wpsdk_album_titleBar_layout"));
-//        mVideoPlayLayout = findViewById(_AlbumUtils.getResViewId(getContext(), "wpsdk_album_video_play_layout"));
-//        mVideoCutLayout = findViewById(_AlbumUtils.getResViewId(getContext(), "wpsdk_album_video_cut_layout"));
-//        mLoadingView = findViewById(_AlbumUtils.getResViewId(getContext(), "wpsdk_album_loading_layout"));
+//        mTitleBar = findViewById(_AlbumUtils.getResViewId(getContext(), "album_titleBar_layout"));
+//        mVideoPlayLayout = findViewById(_AlbumUtils.getResViewId(getContext(), "album_video_play_layout"));
+//        mVideoCutLayout = findViewById(_AlbumUtils.getResViewId(getContext(), "album_video_cut_layout"));
+//        mLoadingView = findViewById(_AlbumUtils.getResViewId(getContext(), "album_loading_layout"));
 //        _AlbumUtils.topbarApi35Margin(getContext(), mTitleBar);
 //    }
 //

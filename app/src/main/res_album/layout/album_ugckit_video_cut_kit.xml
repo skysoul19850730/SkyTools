@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <com.skysoul.album.core.ugckit.slider.VideoCutView
-        android:id="@+id/wpsdk_album_video_edit_view"
+        android:id="@+id/album_video_edit_view"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
@@ -14,25 +14,25 @@
         android:layout_marginBottom="20dp" />
 
     <TextView
-        android:id="@+id/wpsdk_album_tv_choose_duration"
+        android:id="@+id/album_tv_choose_duration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/wpsdk_album_video_edit_view"
+        android:layout_above="@+id/album_video_edit_view"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
         android:textColor="@color/ugckit_white" />
 
     <ImageView
-        android:id="@+id/wpsdk_album_iv_rotate"
+        android:id="@+id/album_iv_rotate"
         android:layout_width="wrap_content"
         android:visibility="gone"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/wpsdk_album_video_edit_view"
+        android:layout_above="@+id/album_video_edit_view"
         android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"
         android:layout_marginBottom="10dp"
         android:background="@null"
-        android:src="@drawable/wpsdk_album_ugckit_icon_rotate_video_view"
+        android:src="@drawable/album_ugckit_icon_rotate_video_view"
         android:text="rotate" />
 </RelativeLayout>

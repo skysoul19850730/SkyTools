@@ -43,8 +43,8 @@ public class VideoWorkProgressFragment extends DialogFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        mViewContent = inflater.inflate(_AlbumUtils.getResLayoutId(inflater.getContext(), "wpsdk_album_ugckit_layout_joiner_progress"), null);
-        mTextTips = mViewContent.findViewById(_AlbumUtils.getResViewId(inflater.getContext(), "wpsdk_album_joiner_tv_msg"));
+        mViewContent = inflater.inflate(_AlbumUtils.getResLayoutId(inflater.getContext(), "album_ugckit_layout_joiner_progress"), null);
+        mTextTips = mViewContent.findViewById(_AlbumUtils.getResViewId(inflater.getContext(), "album_joiner_tv_msg"));
         Bundle bundle = getArguments();
         if (bundle != null) {
             String msg = bundle.getString(KEY_TITLE);
@@ -52,8 +52,8 @@ public class VideoWorkProgressFragment extends DialogFragment {
                 mTextTips.setText(msg);
             }
         }
-        mImageStop = mViewContent.findViewById(_AlbumUtils.getResViewId(inflater.getContext(), "wpsdk_album_joiner_iv_stop"));
-        mProgressLoading = (NumberProgressBar) mViewContent.findViewById(_AlbumUtils.getResViewId(inflater.getContext(), "wpsdk_album_joiner_pb_loading"));
+        mImageStop = mViewContent.findViewById(_AlbumUtils.getResViewId(inflater.getContext(), "album_joiner_iv_stop"));
+        mProgressLoading = (NumberProgressBar) mViewContent.findViewById(_AlbumUtils.getResViewId(inflater.getContext(), "album_joiner_pb_loading"));
         mProgressLoading.setMax(100);
         mProgressLoading.setProgress(mProgress);
         mProgressLoading.setUnreachedBarColor(Color.WHITE);

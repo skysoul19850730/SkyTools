@@ -17,7 +17,7 @@
             android:layout_marginStart="10dp"
             android:paddingHorizontal="10dp"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/wpsdk_album_ic_back" />
+            android:src="@drawable/album_ic_back" />
 
         <TextView
             android:id="@+id/_album_tv_image_indicator"
@@ -40,7 +40,7 @@
                 android:id="@+id/_album_tv_checked"
                 android:layout_width="21.5dp"
                 android:layout_height="21.5dp"
-                android:background="@drawable/wpsdk_album_shape_image_selected_bg"
+                android:background="@drawable/album_shape_image_selected_bg"
                 android:gravity="center"
                 android:textColor="#FFFFFF"
                 android:textSize="13sp" />

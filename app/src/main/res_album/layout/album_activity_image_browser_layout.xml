@@ -17,7 +17,7 @@
             android:layout_marginStart="10dp"
             android:paddingHorizontal="10dp"
             android:layout_gravity="center_vertical"
-            android:src="@drawable/wpsdk_album_ic_back" />
+            android:src="@drawable/album_ic_back" />
 
         <TextView
             android:id="@+id/_album_tv_image_indicator"
@@ -47,15 +47,15 @@
                     android:layout_height="30dp"
                     android:layout_centerVertical="true"
                     android:padding="5dp"
-                    android:layout_toLeftOf="@+id/wpsdk_album_tvSave"
-                    android:src="@drawable/wpsdk_album_ic_crop" />
+                    android:layout_toLeftOf="@+id/album_tvSave"
+                    android:src="@drawable/album_ic_crop" />
 
                 <TextView
                     android:id="@+id/_album_tv_finish"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="15dp"
-                    android:background="@drawable/wpsdk_album_shape_finish"
+                    android:background="@drawable/album_shape_finish"
                     android:paddingHorizontal="15dp"
                     android:paddingVertical="5dp"
                     android:text="完成"

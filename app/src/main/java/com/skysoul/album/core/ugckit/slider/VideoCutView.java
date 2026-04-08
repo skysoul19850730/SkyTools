@@ -90,19 +90,19 @@
 //
 //    private void init(Context context) {
 //        mContext = context;
-//        inflate(getContext(), _AlbumUtils.getResLayoutId(getContext(), "wpsdk_album_ugckit_item_edit_view"), this);
+//        inflate(getContext(), _AlbumUtils.getResLayoutId(getContext(), "album_ugckit_item_edit_view"), this);
 //
-//        mRangeSlider = (com.skysoul.album.core.ugckit.slider.RangeSlider) findViewById(_AlbumUtils.getResViewId(getContext(), "wpsdk_album_range_slider"));
+//        mRangeSlider = (com.skysoul.album.core.ugckit.slider.RangeSlider) findViewById(_AlbumUtils.getResViewId(getContext(), "album_range_slider"));
 //        mRangeSlider.setRangeChangeListener(this);
-//        mRangeSlider.setLeftIconResource(_AlbumUtils.getResDrawableId(getContext(), "wpsdk_album_ugckit_ic_progress_left"));
-//        mRangeSlider.setRightIconResource(_AlbumUtils.getResDrawableId(getContext(), "wpsdk_album_ugckit_ic_progress_right"));
+//        mRangeSlider.setLeftIconResource(_AlbumUtils.getResDrawableId(getContext(), "album_ugckit_ic_progress_left"));
+//        mRangeSlider.setRightIconResource(_AlbumUtils.getResDrawableId(getContext(), "album_ugckit_ic_progress_right"));
 //        mRangeSlider.setTickCount(100);
 //        mRangeSlider.setRangeIndex(0, 100);
 //        mRangeSlider.setLineColor(Color.parseColor("#FF584C"));
 //        mRangeSlider.setLineSize(_AlbumUtils.dp2px(3));
 //        mRangeSlider.setThumbWidth(_AlbumUtils.dp2px(10));
 //
-//        mHorizontalListView = findViewById(_AlbumUtils.getResViewId(getContext(), "wpsdk_album_recycler_view"));
+//        mHorizontalListView = findViewById(_AlbumUtils.getResViewId(getContext(), "album_recycler_view"));
 //        mHorizontalListView.setOnScrollStateChangedListener(mOnScrollListener);
 //
 //        mAdapter = new TCVideoEditerAdapter(mContext);

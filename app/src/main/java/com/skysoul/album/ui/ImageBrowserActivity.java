@@ -70,7 +70,7 @@ public class ImageBrowserActivity extends AlbumBaseActivity {
 
     @Override
     protected int getLayoutId() {
-        return _AlbumUtils.getResLayoutId(this, "wpsdk_album_activity_image_browser_layout");
+        return _AlbumUtils.getResLayoutId(this, "album_activity_image_browser_layout");
     }
 
     @Override
@@ -282,7 +282,7 @@ public class ImageBrowserActivity extends AlbumBaseActivity {
             if(viewPool.size() > 0){
                 view = viewPool.poll();
             } else {
-                view = LayoutInflater.from(container.getContext()).inflate(_AlbumUtils.getResLayoutId(ImageBrowserActivity.this, "wpsdk_album_image_preview_item"), container, false);
+                view = LayoutInflater.from(container.getContext()).inflate(_AlbumUtils.getResLayoutId(ImageBrowserActivity.this, "album_image_preview_item"), container, false);
             }
             PhotoView photoView = view.findViewById(_AlbumUtils.getResViewId(ImageBrowserActivity.this, "_album_photoView"));
             CoreAlbumManager.getInstance().getImageLoader().loadImage(photoView, mediaInfoList.get(position).getShowPath());

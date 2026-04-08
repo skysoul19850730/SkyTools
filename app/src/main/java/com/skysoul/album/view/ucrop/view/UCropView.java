@@ -26,7 +26,7 @@ public class UCropView extends FrameLayout {
     public UCropView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        LayoutInflater.from(context).inflate(_AlbumUtils.getResLayoutId(context, "wpsdk_album_ucrop_view"), this, true);
+        LayoutInflater.from(context).inflate(_AlbumUtils.getResLayoutId(context, "album_ucrop_view"), this, true);
         mGestureCropImageView = findViewById(_AlbumUtils.getResViewId(context, "image_view_crop"));
         mViewOverlay = findViewById(_AlbumUtils.getResViewId(context, "view_overlay"));
         mViewOverlay.processStyledAttributes();

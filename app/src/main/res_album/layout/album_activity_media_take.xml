@@ -18,7 +18,7 @@
         android:layout_marginStart="11dp"
         android:layout_marginTop="35dp"
         android:padding="9dp"
-        android:src="@drawable/wpsdk_album_ic_take_back" />
+        android:src="@drawable/album_ic_take_back" />
 
     <ImageView
         android:id="@+id/_album_iv_switch"
@@ -27,7 +27,7 @@
         android:layout_marginEnd="12dp"
         android:layout_marginTop="35dp"
         android:padding="10dp"
-        android:src="@drawable/wpsdk_album_ic_camera_switch"
+        android:src="@drawable/album_ic_camera_switch"
         android:layout_gravity="end" />
 
     <com.skysoul.album.view.RecordBtn

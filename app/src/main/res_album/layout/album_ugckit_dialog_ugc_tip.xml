@@ -6,7 +6,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/wpsdk_album_tv_title"
+        android:id="@+id/album_tv_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
@@ -20,7 +20,7 @@
         android:background="@color/ugckit_color_accent"/>
 
     <TextView
-        android:id="@+id/wpsdk_album_tv_msg"
+        android:id="@+id/album_tv_msg"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="10dp"
@@ -29,7 +29,7 @@
         android:textSize="16sp"/>
 
     <Button
-        android:id="@+id/wpsdk_album_btn_ok"
+        android:id="@+id/album_btn_ok"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/ugckit_color_accent"

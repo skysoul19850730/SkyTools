@@ -38,13 +38,13 @@ public class TitleBarLayout extends LinearLayout implements ITitleBarLayout {
     }
 
     private void init() {
-        inflate(getContext(), _AlbumUtils.getResLayoutId(getContext(), "wpsdk_album_ugckit_title_bar_layout"), this);
-        mTitleLayout = findViewById(_AlbumUtils.getResViewId(getContext(), "wpsdk_album_page_title_layout"));
-        mLeftGroup = findViewById(_AlbumUtils.getResViewId(getContext(), "wpsdk_album_page_title_left_group"));
-        mLeftTitle = findViewById(_AlbumUtils.getResViewId(getContext(), "wpsdk_album_page_title_left_text"));
-        mCenterTitle = findViewById(_AlbumUtils.getResViewId(getContext(), "wpsdk_album_page_title"));
-        mLeftIcon = findViewById(_AlbumUtils.getResViewId(getContext(), "wpsdk_album_page_title_left_icon"));
-        mRightButton = findViewById(_AlbumUtils.getResViewId(getContext(), "wpsdk_album_btn_next"));
+        inflate(getContext(), _AlbumUtils.getResLayoutId(getContext(), "album_ugckit_title_bar_layout"), this);
+        mTitleLayout = findViewById(_AlbumUtils.getResViewId(getContext(), "album_page_title_layout"));
+        mLeftGroup = findViewById(_AlbumUtils.getResViewId(getContext(), "album_page_title_left_group"));
+        mLeftTitle = findViewById(_AlbumUtils.getResViewId(getContext(), "album_page_title_left_text"));
+        mCenterTitle = findViewById(_AlbumUtils.getResViewId(getContext(), "album_page_title"));
+        mLeftIcon = findViewById(_AlbumUtils.getResViewId(getContext(), "album_page_title_left_icon"));
+        mRightButton = findViewById(_AlbumUtils.getResViewId(getContext(), "album_btn_next"));
     }
 
     @Override
