@@ -26,6 +26,12 @@ android {
         }
     }
 
+    sourceSets {
+        getByName("main"){
+            res.srcDirs("src/main/res_album")
+        }
+    }
+
     buildTypes {
 
 //       getByName("debug").apply{
@@ -94,6 +100,4 @@ dependencies {
 
 
     kapt(libs.roomkapt)
-
-
 }

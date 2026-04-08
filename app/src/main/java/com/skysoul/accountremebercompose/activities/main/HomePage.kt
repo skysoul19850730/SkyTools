@@ -1,5 +1,8 @@
 package com.skysoul.accountremebercompose.activities.main
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import androidx.activity.compose.LocalActivity
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalSharedTransitionApi
 import androidx.compose.animation.SharedTransitionScope
@@ -40,11 +43,15 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.runtime.toMutableStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -52,18 +59,23 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.Path
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.graphics.painter.BitmapPainter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import com.skysoul.accountremebercompose.R
+import com.skysoul.accountremebercompose.activities.dialogs.UserSelectDialog
 import com.skysoul.accountremebercompose.activities.main.AccountItemClick.CHECKED_CHANGE
 import com.skysoul.accountremebercompose.activities.main.ClickView.SEARCH
+import com.skysoul.accountremebercompose.managers.UserManager
 import com.skysoul.accountremebercompose.ui.HSpace16
 import com.skysoul.accountremebercompose.ui.VSpace
 import com.skysoul.accountremebercompose.ui.bar.Action
 import com.skysoul.accountremebercompose.ui.bar.topBar
+import com.skysoul.accountremebercompose.ui.button
 import com.skysoul.accountremebercompose.ui.dialog.TextDialog
 import kotlinx.coroutines.launch
 
@@ -212,7 +224,7 @@ fun HomePage(
 
                 var cated = mViewModel.cateSelected
                 val accouts =
-                    mViewModel.accountsFlow(cated!!).collectAsState(initial = arrayListOf())
+                    mViewModel.accountsFlow(UserManager.memberState.value!!,cated!!).collectAsState(initial = arrayListOf())
 
                 Row {
                     cardTabs(mViewModel)
@@ -491,14 +503,24 @@ fun DrawerMenu(menu: DMenu, clickListener: (ClickView) -> Unit) {
 @Composable
 fun DrawerHeader(mViewModel: MainViewModel, clickListener: (ClickView) -> Unit) {
 
+    var avatarBm by remember { mutableStateOf<Bitmap?>(null) }
+    val showMemberDialog = remember {  mutableStateOf(false)}
+    val activity = LocalActivity.current
+
+    LaunchedEffect(UserManager.memberState.value) {
+        val bs =UserManager.memberState.value?.avatar?:return@LaunchedEffect
+        avatarBm = BitmapFactory.decodeByteArray(bs,0,bs.size)
+    }
+
     ConstraintLayout(
         modifier = Modifier
             .fillMaxWidth()
             .height(192.dp)
             .background(Color.Black)
     ) {
-        val (header, nick, logout) = createRefs()
-        Image(painter = painterResource(id = R.mipmap.sidebar_headportrait),
+        val (header, nick, logout,exchange) = createRefs()
+
+        Image(painter = if(avatarBm!=null) BitmapPainter(avatarBm?.asImageBitmap()!!) else  painterResource(id = R.mipmap.sidebar_headportrait),
             contentDescription = "",
             Modifier
                 .size(60.dp)
@@ -510,7 +532,7 @@ fun DrawerHeader(mViewModel: MainViewModel, clickListener: (ClickView) -> Unit) 
                     clickListener.invoke(ClickView.HEADER)
                 })
         Text(
-            text = mViewModel.user.value?.nickName ?: "",
+            text ="${UserManager.userState.value?.nickName}-${UserManager.memberState.value?.nickName}",
             Modifier.constrainAs(nick) {
                 top.linkTo(header.top)
                 start.linkTo(header.end, 12.dp)
@@ -518,12 +540,25 @@ fun DrawerHeader(mViewModel: MainViewModel, clickListener: (ClickView) -> Unit) 
             fontSize = 18.sp,
             color = Color.White
         )
-        Button(onClick = { mViewModel.logout() }, Modifier.constrainAs(logout) {
+        Button(onClick = { UserManager.logout(activity) }, Modifier.constrainAs(logout) {
             end.linkTo(parent.end, 24.dp)
             bottom.linkTo(parent.bottom, 24.dp)
         }) {
             Text(text = "登出", color = Color.White, fontSize = 16.sp)
         }
+
+        button("切换成员", modifier = Modifier.constrainAs(exchange){
+            end.linkTo(logout.start,12.dp)
+            centerVerticallyTo(logout)
+        }) {
+            //切换成员逻辑
+            showMemberDialog.value = true
+        }
+
+        UserSelectDialog(showMemberDialog){item->
+            UserManager.changeMember(item)
+        }
+
     }
 
 }

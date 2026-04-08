@@ -60,63 +60,58 @@ class MainActivity : BaseActivity<MainViewModel>() {
                     }
                 }
             }
-            if(showSearch.value) {
+            if (showSearch.value) {
                 SearchPage(
                     viewModel, sharedTransitionScope = this@SharedTransitionLayout,
                     showSearch = showSearch
-                ) {click,params ->
+                ) { click, params ->
 
                 }
             }
 
-    }
-
-
-}
-
-
-private fun gotoSearch() {
-}
-
-override fun initData() {
-    viewModel.initCates()
-}
-
-fun gotoEditor(account: Account?) {
-    startActivity(Intent(this, EditActivity::class.java).apply {
-        if (account != null)
-            putExtra("account", account)
-    })
-}
-
-override fun onBackPressed() {
-
-    if (showSearch.value) {
-        showSearch.value = false
-        return
-    }
-
-    if (scostate.isOpen) {
-        scope.launch {
-            scostate.close()
         }
-        return
+
+
     }
 
 
-    if (viewModel.editting) {
-        viewModel.editting = false
-        return
+    private fun gotoSearch() {
     }
-    super.onBackPressed()
-}
 
-override fun startObserver() {
-    UserManager.userLiveData.observe(this) {
-        if (it == null) {
-            startActivity(Intent(this, LoginActivity::class.java))
+    override fun initData() {
+        viewModel.initCates()
+    }
+
+    fun gotoEditor(account: Account?) {
+        startActivity(Intent(this, EditActivity::class.java).apply {
+            if (account != null)
+                putExtra("account", account)
+        })
+    }
+
+    override fun onBackPressed() {
+
+        if (showSearch.value) {
+            showSearch.value = false
+            return
         }
+
+        if (scostate.isOpen) {
+            scope.launch {
+                scostate.close()
+            }
+            return
+        }
+
+
+        if (viewModel.editting) {
+            viewModel.editting = false
+            return
+        }
+        super.onBackPressed()
     }
-}
+
+    override fun startObserver() {
+    }
 
 }

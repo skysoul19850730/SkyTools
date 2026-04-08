@@ -1,0 +1,9 @@
+<resources>
+
+    <string name="ugckit_video_cutter_activity_load_video_success_already_picked">已选取</string>
+    <string name="ugckit_video_editer_activity_cancel_video_generation">取消视频生成</string>
+    <string name="ugckit_video_cutter_activity_oncreate_an_unknown_error_occurred_the_path_cannot_be_empty">发生未知错误,路径不能为空</string>
+    <string name="ugckit_video_cutter_activity_video_main_handler_edit_failed">编辑失败</string>
+    <string name="ugckit_does_not_support_android_version_below_4_3">暂不支持空视频文件</string>
+    <string name="ugckit_video_cutting">视频裁剪中...</string>
+</resources>

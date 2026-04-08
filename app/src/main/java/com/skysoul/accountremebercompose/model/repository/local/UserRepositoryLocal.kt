@@ -103,6 +103,8 @@ class UserRepositoryLocal : UserRepository, BaseRepository() {
         return safeDBCall {
             userDao.getUserById(user.userId)?.run {
                 nickName = user.nickName
+                currentDMMemberId = user.currentMember?.id
+                lastLoginTime = System.currentTimeMillis()
                 userDao.update(this).run {
 
                     SSResult.Success(this)

@@ -89,7 +89,7 @@ fun SearchPage(
     val history = remember { mutableStateListOf<String>() }
 
     LaunchedEffect("") {
-        val his = SharedPreferencesManager.getString("history_${UserManager.getUserId()}")
+        val his = SharedPreferencesManager.getString("history_${UserManager.userId}")
         if (!his.isNullOrEmpty()) {
             history.addAll(his.split(","))
         }
@@ -147,7 +147,7 @@ fun SearchPage(
                                     history.removeRange(0, history.size - 10)
                                 }
                                 SharedPreferencesManager.setString(
-                                    "history_${UserManager.getUserId()}",
+                                    "history_${UserManager.userId}",
                                     history.joinToString(",")
                                 )
                             }

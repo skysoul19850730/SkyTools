@@ -47,7 +47,7 @@ class RegisterViewModel2 : BaseViewModel() {
 
     fun doOver(bitmap: Bitmap?=null) {
         userNameState.checkNull("昵称不能为空") ?: return
-        var userLogined = UserManager.getUser() ?: return
+        var userLogined = UserManager.userState.value ?: return
         launch {
 
             userRepository.isNickNameExist(userNameState.text).ifSuccess {
@@ -72,26 +72,27 @@ class RegisterViewModel2 : BaseViewModel() {
             }
 
 
-            var user = User()
-            user.userId = userLogined.userId
-            user.nickName = userNameState.text
+            var user4UpdateInfo = User()
+            user4UpdateInfo.userId = userLogined.userId
+            user4UpdateInfo.nickName = userNameState.text
 
-            val dmMember = DMMember(0,user.userId,user.nickName,
+            val dmMember = DMMember(0,user4UpdateInfo.userId,user4UpdateInfo.nickName,
                 bitmap?.toBlob() )
 
-            userRepository.addMember(dmMember)
+            userRepository.addMember(dmMember).ifSuccess {
+                user4UpdateInfo.currentMember =  it
+                userLogined.currentMember = it
+            }
 
-
-            userRepository.updateUserBaseInfo(user)
-
-
-            userLogined.nickName = user.nickName
+            userRepository.updateUserBaseInfo(user4UpdateInfo)
+            userLogined.nickName = user4UpdateInfo.nickName
             userRepository.updateUserPassword4ViewAccount(
                 userLogined.userId,
                 passwordState.text,
                 usePassLogin
             ).ifSuccess {
                 showToast("信息完成")
+                UserManager.logSuc(userLogined)
                 next.postValue(true)
             }.ifError {
                 showToast("信息填写有误")

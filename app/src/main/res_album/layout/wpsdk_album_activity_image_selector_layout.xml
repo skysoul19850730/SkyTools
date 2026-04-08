@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000">
+
+    <FrameLayout
+        android:id="@+id/_album_title_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="false">
+
+        <TextView
+            android:id="@+id/_album_tv_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="取消"
+            android:textColor="@color/_album_c_98a2a8"
+            android:layout_gravity="center_vertical"
+            android:paddingHorizontal="12sp"
+            android:paddingVertical="10dp"/>
+
+        <LinearLayout
+            android:id="@+id/_album_name_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <TextView
+                android:id="@+id/_album_tv_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/_album_c_dce5eb"
+                android:text=""
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:textSize="16sp"
+                android:textStyle="bold"/>
+
+            <ImageView
+                android:id="@+id/_album_iv_arrow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="3dp"
+                android:tint="@color/_album_c_dce5eb"
+                android:src="@drawable/wpsdk_album_ic_arrow"
+                android:layout_gravity="center_vertical"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/_album_tv_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|end"
+            android:text="下一步"
+            android:textSize="11sp"
+            android:textColor="@color/wpsdk_album_tv_next_color"
+            android:background="@drawable/wpsdk_album_tv_next_bg"
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="3.5dp"
+            android:layout_marginEnd="12dp"/>
+    </FrameLayout>
+
+    <GridView
+        android:id="@+id/image_grid_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/_album_title_layout"
+        android:layout_marginTop="0dp"
+        android:overScrollMode="never" />
+
+
+    <FrameLayout
+        android:id="@+id/_album_folder_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/_album_title_layout">
+
+        <LinearLayout
+            android:id="@+id/_album_folder_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="#000000"
+            android:clipChildren="true">
+            <ListView
+                android:id="@+id/_album_folder_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:divider="@null"
+                android:overScrollMode="never"/>
+
+            <com.skysoul.album.view.HorizontalListView
+                android:id="@+id/_album_landscape_folder_list_view"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@null"
+                android:overScrollMode="never"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#44000000"/>
+
+    </FrameLayout>
+</RelativeLayout>

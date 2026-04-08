@@ -38,7 +38,9 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.skysoul.accountremebercompose.activities.dialogs.UserSelectDialog
 import com.skysoul.accountremebercompose.launch
+import com.skysoul.accountremebercompose.managers.UserManager
 import com.skysoul.accountremebercompose.ui.HSpace16
 import com.skysoul.accountremebercompose.ui.VSpace
 import com.skysoul.accountremebercompose.ui.VSpace16
@@ -69,6 +71,9 @@ class EditInputBean(
 @Composable
 fun editPage(mViewModel: EditViewModel = viewModel()) {
 
+    var member by remember { mutableStateOf(UserManager.memberState.value) }
+    var showDialog  = remember {  mutableStateOf(false)}
+
     var showCateDialog: MutableState<Boolean> = remember { mutableStateOf(false) }
     var showCateAdd = remember { mutableStateOf(false) }
 
@@ -80,7 +85,7 @@ fun editPage(mViewModel: EditViewModel = viewModel()) {
                 showBack = true,
                 title = "编辑",
                 onBackPressed = { mViewModel.finish.postValue(true) },
-                actions = arrayOf(Action.TextAction("保存") { mViewModel.save() })
+                actions = arrayOf(Action.TextAction("保存") { mViewModel.save(member!!) })
             )
         }
     ) {
@@ -118,6 +123,12 @@ fun editPage(mViewModel: EditViewModel = viewModel()) {
                     showCateAdd.value = true
                 })
                 HSpace16()
+            }
+
+            Row {
+                Text("添加到：${member?.nickName}", modifier = Modifier.clickable{
+                    showDialog.value = true
+                })
             }
 
             VSpace16()
@@ -197,6 +208,10 @@ fun editPage(mViewModel: EditViewModel = viewModel()) {
 
             }
         })
+
+        UserSelectDialog(showDialog,false){
+            member = it
+        }
     }
 }
 

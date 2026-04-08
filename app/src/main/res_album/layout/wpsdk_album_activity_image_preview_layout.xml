@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000">
+
+    <FrameLayout
+        android:id="@+id/ly_head"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="false">
+
+        <ImageView
+            android:id="@+id/_album_iv_back"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_marginStart="10dp"
+            android:paddingHorizontal="10dp"
+            android:layout_gravity="center_vertical"
+            android:src="@drawable/wpsdk_album_ic_back" />
+
+        <TextView
+            android:id="@+id/_album_tv_image_indicator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="#FFFFFF"
+            android:textSize="13sp" />
+
+
+        <LinearLayout
+            android:id="@+id/_album_ly_checked"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|end"
+            android:layout_marginRight="10dp"
+            android:padding="15dp">
+
+            <TextView
+                android:id="@+id/_album_tv_checked"
+                android:layout_width="21.5dp"
+                android:layout_height="21.5dp"
+                android:background="@drawable/wpsdk_album_shape_image_selected_bg"
+                android:gravity="center"
+                android:textColor="#FFFFFF"
+                android:textSize="13sp" />
+        </LinearLayout>
+
+    </FrameLayout>
+
+
+    <com.skysoul.album.view.viewpager.ViewPager
+        android:id="@+id/_album_view_pager"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/ly_head"
+        android:overScrollMode="never" />
+</RelativeLayout>

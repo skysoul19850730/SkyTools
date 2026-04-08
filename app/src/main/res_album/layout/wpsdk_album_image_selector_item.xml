@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingStart="2.5dp"
+    android:paddingEnd="2.5dp"
+    android:paddingBottom="5dp">
+
+    <ImageView
+        android:id="@+id/iv_img"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="centerCrop"/>
+
+    <FrameLayout
+        android:id="@+id/_album_select_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="3dp"
+        android:paddingEnd="3dp"
+        android:paddingBottom="12dp"
+        android:paddingStart="12dp"
+        android:layout_gravity="end">
+
+        <TextView
+            android:id="@+id/_album_tv_index"
+            android:layout_width="wrap_content"
+            android:layout_height="21.5dp"
+            android:minWidth="21.5dp"
+            android:background="@drawable/wpsdk_album_shape_image_selected_bg"
+            android:gravity="center"
+            android:textColor="@color/_album_c_806120"
+            android:textSize="13sp"
+            android:includeFontPadding="false" />
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/_album_tv_video_duration"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:background="@drawable/wpsdk_album_shape_preview_checked"
+        android:paddingHorizontal="4dp"
+        android:paddingVertical="1dp"
+        android:textColor="#FFFFFF"
+        android:textSize="9sp" />
+
+    <FrameLayout
+        android:id="@+id/_album_takePhoto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/_album_c_23333b"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="44dp"
+                android:layout_height="42dp"
+                android:src="@drawable/wpsdk_album_ic_take_camera" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="照相"
+                android:textColor="@color/_album_c_bec8ce"
+                android:textSize="12sp" />
+
+        </LinearLayout>
+    </FrameLayout>
+
+    <View
+        android:id="@+id/_album_shade"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#CCFFFFFF"
+        android:clickable="true"
+        android:visibility="gone" />
+
+</FrameLayout>

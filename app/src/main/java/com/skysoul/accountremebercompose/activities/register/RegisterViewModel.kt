@@ -49,7 +49,7 @@ class RegisterViewModel : BaseViewModel() {
                 passwordTipState.text
             ).ifSuccess {
                 showToast("注册成功")
-                UserManager.save4LastUser(it.userName,it.userId)
+                UserManager.logSuc(it)
                 cateRepository.addCate(Cate(0,"默认分类",it.userId))
                 next.postValue(true)
             }.ifError {

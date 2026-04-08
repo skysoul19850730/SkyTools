@@ -22,7 +22,7 @@ data class DMUser(
         var id: Int = 0,
         var userName: String = "",
         var password: MDPasswordInfo,
-        var nickName: String = userName,
+        var nickName: String = "",
         var passwordTip: String="",
         var leftTryTimes: Int =5,
         var lastWrongTime: String ="",
@@ -30,6 +30,7 @@ data class DMUser(
         var passwordView: MDPasswordInfo = MDPasswordInfo(""),
         var passwordViewTip :String ="",
         var isSamePassword:Boolean = true,
+        var lastLoginTime: Long =  0,
         var currentDMMemberId: Int? = null  // 可空，NULL 不触发外键检查
 
 ) {

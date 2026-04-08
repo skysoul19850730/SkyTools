@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:seekbar="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="60dp">
+
+    <com.skysoul.album.view.HorizontalListView
+        android:id="@+id/wpsdk_album_recycler_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" />
+
+    <com.skysoul.album.core.ugckit.slider.RangeSlider
+        android:id="@+id/wpsdk_album_range_slider"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+</RelativeLayout>

@@ -16,6 +16,9 @@ class User {
     var isViewPasswordSet = true
 
     var currentMember: DMMember?=null
+    var members : MutableList<DMMember> = mutableListOf()
+
+    var lastLoginTime : Long = 0
 
     constructor()
 
@@ -26,11 +29,13 @@ class User {
         passwordTip = dmUser.passwordTip
         passwordViewTip = dmUser.passwordViewTip
         isSamePassword = dmUser.isSamePassword
+        lastLoginTime = dmUser.lastLoginTime
         isViewPasswordSet = isSamePassword || dmUser.passwordView?.hasValue() ?: false
     }
 
     constructor(userWithMembers: UserWithMembers):this(userWithMembers.user){
         currentMember = userWithMembers.currentMember
+        members = userWithMembers.members as MutableList<DMMember>
     }
 
 }

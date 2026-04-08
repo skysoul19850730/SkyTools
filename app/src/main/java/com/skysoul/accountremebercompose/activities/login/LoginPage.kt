@@ -52,7 +52,7 @@ fun loginPage() {
         onLoginClick = {
             viewModel.login()
         }, onRegisterClick = {
-            viewModel.registerType.postValue(1)
+            viewModel.toRegisterAct()
         }
     )
 }

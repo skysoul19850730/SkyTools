@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000">
+
+    <com.skysoul.album.view.ucrop.view.UCropView
+        android:id="@+id/_album_cropView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/lyBottom" />
+
+    <LinearLayout
+        android:id="@+id/lyBottom"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:id="@+id/_album_ratio_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp">
+
+            <TextView
+                android:id="@+id/tv_crop_size"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="20dp"
+                android:text="尺寸"
+                android:textColor="#80ffffff"
+                android:textSize="12sp" />
+
+            <LinearLayout
+                android:id="@+id/_album_ratio_list"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:layout_marginEnd="18dp"
+                android:orientation="horizontal" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:id="@+id/bottom_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:paddingBottom="50dp">
+
+            <ImageView
+                android:id="@+id/_album_iv_close"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="9dp"
+                android:padding="11dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/wpsdk_album_ic_back" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:text="调整"
+                android:layout_gravity="center"
+                android:textColor="#FFFFFF"
+                android:textSize="14sp" />
+
+            <ImageView
+                android:id="@+id/_album_iv_save"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_marginEnd="20dp"
+                android:paddingVertical="8dp"
+                android:layout_gravity="end|center_vertical"
+                android:src="@drawable/wpsdk_album_ic_ensure" />
+
+        </FrameLayout>
+    </LinearLayout>
+
+</RelativeLayout>

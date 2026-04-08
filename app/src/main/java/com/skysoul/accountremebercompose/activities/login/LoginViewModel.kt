@@ -1,15 +1,18 @@
 package com.skysoul.accountremebercompose.activities.login
 
+import androidx.compose.runtime.currentComposer
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.MutableLiveData
 import com.skysoul.accountremebercompose.base.BaseViewModel
 import com.skysoul.accountremebercompose.launch
 import com.skysoul.accountremebercompose.managers.UserManager
+import com.skysoul.accountremebercompose.model.SSResult
 import com.skysoul.accountremebercompose.model.beans.User
 import com.skysoul.accountremebercompose.model.repository.local.UserRepositoryLocal
 import com.skysoul.accountremebercompose.ui.edittext.TextFieldState
 import com.skysoul.accountremebercompose.utils.SharedPreferencesManager
 import com.skysoul.accountremebercompose.utils.log
+import kotlinx.coroutines.GlobalScope
 
 /**
  *@author shenqichao
@@ -23,11 +26,23 @@ class LoginViewModel : BaseViewModel() {
 
 //    var lastUser: MutableLiveData<User?> = MutableLiveData()
 
-    val userRepository: UserRepositoryLocal = UserRepositoryLocal()
+    private val userRepository: UserRepositoryLocal = UserRepositoryLocal()
 
     val registerType = MutableLiveData(-1)
 
     val passTip = mutableStateOf("")
+
+    private suspend fun getTheLastUser(): User? {
+        val curUid = SharedPreferencesManager.getInt(SharedPreferencesManager.userid, 0)
+        return if (curUid == 0) null else userRepository.getUserById(curUid)?.run {
+            when (this) {
+                is SSResult.Success -> {
+                    data
+                }
+                else -> null
+            }
+        }
+    }
 
     fun getLastUser() {
         launch {
@@ -35,10 +50,13 @@ class LoginViewModel : BaseViewModel() {
             SharedPreferencesManager.getString(SharedPreferencesManager.lastUserName)?.run {
                 userNameState.text = this
             }
-            val user = UserManager.getLastUser()
+            var user = getTheLastUser()
             if (user != null) {
-                jumpWithUser(user)
+                if(user!!.lastLoginTime!=0L && System.currentTimeMillis() - user!!.lastLoginTime>14*24*60*60*1000){
+                    user = null
+                }
             }
+            jumpWithUser(user)
             hideLoading()
         }
     }
@@ -58,11 +76,16 @@ class LoginViewModel : BaseViewModel() {
             if (user.nickName.isNullOrEmpty()) {
                 registerType.postValue(2)
             } else {
-                registerType.postValue(0)
+                launch {
+                    UserManager.logSuc(user)
+                    registerType.postValue(0)
+                }
             }
-        } else {
-            registerType.postValue(1)
         }
+    }
+
+    fun toRegisterAct(){
+        registerType.postValue(1)
     }
 
     fun login() {
@@ -83,8 +106,15 @@ class LoginViewModel : BaseViewModel() {
                 it.run {
                     when (errorType) {
                         0 -> {
-                            UserManager.save4LastUser(username, user!!.userId)
-                            jumpWithUser(user)
+                            if(user!=null) {
+                                userRepository.getUserById(user!!.userId).ifSuccess {
+                                    jumpWithUser(it)
+                                }.ifError {
+                                    log(it.message)
+                                }
+
+                            }
+
                         }
                         -1 -> {
                             userNameState.errorText = "用户不存在"

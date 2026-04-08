@@ -6,8 +6,8 @@ import android.widget.ImageView
 import com.skysoul.accountremebercompose.utils.log
 import com.skysoul.appassistant.ActivityStackManager
 import com.skysoul.appassistant.ContextProvider
-import com.wpsdk.album.AlbumManager
-import com.wpsdk.album.ImageLoaderInterface
+import com.skysoul.album.AlbumManager
+import com.skysoul.album.ImageLoaderInterface
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 

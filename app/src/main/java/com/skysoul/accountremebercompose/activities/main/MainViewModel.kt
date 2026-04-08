@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import com.skysoul.accountremebercompose.base.BaseViewModel
+import com.skysoul.accountremebercompose.data.dbroom.entities.DMMember
 import com.skysoul.accountremebercompose.data.dbroom.entities.SimpleAccount
 import com.skysoul.accountremebercompose.launch
 import com.skysoul.accountremebercompose.managers.UserManager
@@ -26,7 +27,6 @@ class MainViewModel : BaseViewModel() {
 
     var editting: Boolean by mutableStateOf(false)
 
-    var user = UserManager.userLiveData
 
   private  val accountResLocal: AccountResLocal = AccountResLocal()
 
@@ -42,24 +42,24 @@ class MainViewModel : BaseViewModel() {
     var cateList = mutableStateListOf<Cate>()
     var cateSelected: Cate? by mutableStateOf(null)
 
-    fun accountsFlow(cate:Cate):Flow<List<SimpleAccount>>{
-        return accountResLocal.getAccountAll(UserManager.getCurMemberId(),cate.id)
+    fun accountsFlow(member: DMMember, cate:Cate):Flow<List<SimpleAccount>>{
+        return accountResLocal.getAccountAll(member.id,cate.id)
     }
 
     fun searchAccounts(key:String):Flow<List<SimpleAccount>>{
         if(key.isEmpty()){
             return emptyFlow()
         }
-        return accountResLocal.searchAccounts(UserManager.getCurMemberId(),key)
+        return accountResLocal.searchAccounts(UserManager.currentMemberId,key)
     }
 
     fun initCates(){
         launch {
-            cateRepository.getCateAll(UserManager.getUserId()).ifSuccess {
+            cateRepository.getCateAll(UserManager.userId).ifSuccess {
                 hideLoading()
                 it.collect{cates->
                     cateList.clear()
-                    cateList.add(Cate(0,"全部",UserManager.getUserId()))
+                    cateList.add(Cate(0,"全部",UserManager.userId))
                     cateList.addAll(cates)
                     if(cateSelected == null){
                         cateSelected = cateList.firstOrNull()
@@ -84,12 +84,6 @@ class MainViewModel : BaseViewModel() {
             callback.invoke(Account.fromDmAccount(aWC))
         }
 
-    }
-
-
-    fun logout() {
-        UserManager.logout()
-        finish.postValue(true)
     }
 
     fun search(key:String){

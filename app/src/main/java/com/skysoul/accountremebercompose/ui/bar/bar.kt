@@ -3,6 +3,7 @@ package com.skysoul.accountremebercompose.ui.bar
 import android.app.Activity
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.BoxScope
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -206,7 +207,7 @@ fun backPage(
 @Composable
 fun topBarPage(
     topbar: @Composable () -> Unit = {},
-    content: @Composable (PaddingValues) -> Unit
+    content: @Composable BoxScope.(PaddingValues) -> Unit
 ) {
     val hostState = remember {
         SnackbarHostState()

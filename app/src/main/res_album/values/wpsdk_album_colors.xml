@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="_album_c_e8cf94">#E8CF94</color>
+    <color name="_album_c_99e8cf94">#99E8CF94</color>
+    <color name="_album_c_806120">#806120</color>
+    <color name="_album_c_dce5eb">#DCE5EB</color>
+    <color name="_album_c_98a2a8">#98A2A8</color>
+    <color name="_album_c_bec8ce">#BEC8CE</color>
+    <color name="_album_c_23333b">#23333B</color>
+
+    <color name="ugckit_white">#FFFFFF</color>
+    <color name="ugckit_black">#000000</color>
+    <color name="ugckit_color_accent">#0accac</color>
+
+</resources>

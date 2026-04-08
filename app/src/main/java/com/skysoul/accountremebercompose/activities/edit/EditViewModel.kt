@@ -7,6 +7,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import com.skysoul.accountremebercompose.base.BaseViewModel
 import com.skysoul.accountremebercompose.data.dbroom.converts.ExtraColumn
+import com.skysoul.accountremebercompose.data.dbroom.entities.DMMember
 import com.skysoul.accountremebercompose.launch
 import com.skysoul.accountremebercompose.managers.UserManager
 import com.skysoul.accountremebercompose.model.beans.Account
@@ -63,7 +64,7 @@ class EditViewModel : BaseViewModel() {
 
         launch {
             showLoading()
-            cateRepository.getCateAll(UserManager.getUserId()).ifSuccess {
+            cateRepository.getCateAll(UserManager.userId).ifSuccess {
                 hideLoading()
                 it.collect{cates->
                     cateList = cates
@@ -78,7 +79,7 @@ class EditViewModel : BaseViewModel() {
 
     }
 
-    fun save() {
+    fun save(member: DMMember) {
         var check = true
         editBeans.forEach {
             if (it.need && it.input.isEmpty()) {
@@ -100,7 +101,7 @@ class EditViewModel : BaseViewModel() {
         accoutNew.bindphone = phoneEditBean.input
 
         accoutNew.create_time = System.currentTimeMillis().toString()
-        accoutNew.memberId = UserManager.getUser()?.currentMember?.id ?: 0
+        accoutNew.memberId = member.id
         accoutNew.cate = cateSelected
         accoutNew.extraColumnList = externalColumn
 
@@ -124,7 +125,7 @@ class EditViewModel : BaseViewModel() {
 //    }
 
     suspend fun addCateAndChoose(cateName: String):Boolean{
-        var cate = Cate(0, cateName = cateName, UserManager.getUserId())
+        var cate = Cate(0, cateName = cateName, UserManager.userId)
         cateRepository.addCate(cate).ifSuccess {
             cate.id = it.toInt()
             cateSelected = cate

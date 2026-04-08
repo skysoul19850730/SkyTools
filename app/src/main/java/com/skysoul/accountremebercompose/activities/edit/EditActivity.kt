@@ -13,8 +13,8 @@ import com.skysoul.accountremebercompose.ui.WheelPickerDemo
 class EditActivity : BaseActivity<EditViewModel>() {
     @Composable
     override fun getPage() {
-//        editPage()
-        WheelPickerDemo()
+        editPage()
+//        WheelPickerDemo()
     }
 
     override fun startObserver() {

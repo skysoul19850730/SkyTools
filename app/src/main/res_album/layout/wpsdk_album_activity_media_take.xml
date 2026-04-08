@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#000000">
+
+    <com.tencent.rtmp.ui.TXCloudVideoView
+        android:id="@+id/_album_videoView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+    <ImageView
+        android:id="@+id/_album_iv_close"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="35dp"
+        android:padding="9dp"
+        android:src="@drawable/wpsdk_album_ic_take_back" />
+
+    <ImageView
+        android:id="@+id/_album_iv_switch"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginTop="35dp"
+        android:padding="10dp"
+        android:src="@drawable/wpsdk_album_ic_camera_switch"
+        android:layout_gravity="end" />
+
+    <com.skysoul.album.view.RecordBtn
+        android:id="@+id/_album_iv_recordBtn"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="50dp"
+        android:layout_gravity="center_horizontal|bottom" />
+
+    <TextView
+        android:id="@+id/_album_tv_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="30dp"
+        android:text="点击拍照"
+        android:textColor="#FFFFFF"
+        android:textSize="13sp"
+        android:layout_gravity="center_horizontal|bottom"/>
+</FrameLayout>

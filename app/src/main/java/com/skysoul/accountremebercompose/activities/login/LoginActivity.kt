@@ -20,11 +20,6 @@ class LoginActivity : BaseActivity<LoginViewModel>() {
     }
 
     override fun startObserver() {
-        UserManager.userLiveData.observe(this) {
-            if (it != null) {
-                finish()
-            }
-        }
         viewModel.registerType.observe(this) {
             if (it >= 0)
                 startActivity(
